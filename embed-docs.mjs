@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 const OLLAMA = "http://localhost:11434/api/embed";
 const MODEL = "embeddinggemma";
-const DOC_PREFIX = "title: none | text: "; // embeddinggemma 문서 접두어
+const DOC_PREFIX = ""; // embeddinggemma 문서 접두어
 const SRC = "senior-docs.source.json";
 const OUT = "senior-docs.json";
 

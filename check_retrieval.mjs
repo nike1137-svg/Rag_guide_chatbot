@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 
 const OLLAMA = "http://localhost:11434/api/embed";
 const MODEL = "embeddinggemma";
-const Q_PREFIX = "task: search result | query: "; // embeddinggemma 질문 접두어
+const Q_PREFIX = ""; // embeddinggemma 질문 접두어
 const docs = JSON.parse(readFileSync("senior-docs.json", "utf-8"));
 
 async function embed(t) {
