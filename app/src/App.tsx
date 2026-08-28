@@ -31,7 +31,9 @@ export default function App() {
     setBusy(true); setAnswer(""); setHits([]); setFeedback("");
     try {
       const res = await searcher.current(query);
-      setHits(res.hits.slice(0, 6)); setWeak(res.weak);
+      setWeak(res.weak);
+      if (res.refuse) { setHits([]); setAnswer("죄송합니다. 이 질문은 안내 범위 밖이거나 자료에 근거가 없어 정확히 답변드리기 어렵습니다. 디지털배움터 이용, 보이스피싱·스미싱 예방, 무인민원발급기·정부24 이용 등에 대해 물어봐 주세요."); return; }
+      setHits(res.hits.slice(0, 6));
       const { system, user } = buildPrompt(query, res.hits, res.weak);
       abort.current = new AbortController();
       let acc = "";

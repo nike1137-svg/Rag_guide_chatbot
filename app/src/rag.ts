@@ -6,6 +6,8 @@ const OLLAMA = "http://localhost:11434";
 const EMBED_MODEL = "embeddinggemma";
 const CHAT_MODEL = "qwen3.5:2b";
 export const THRESHOLD = 0.33;
+export const REFUSE = 0.30;
+const BM25_MIN = 2.0;
 const K_VEC = 10, K_BM25 = 5, RRF_K = 60;
 
 export async function embed(text: string): Promise<number[]> {
@@ -30,7 +32,7 @@ export function buildSearcher(docs: Doc[]) {
     for (const w of new Set(qToks)) { if (!tf[w]) continue; const idf = Math.log(1 + (N - df[w] + 0.5) / (df[w] + 0.5)); s += idf * (tf[w] * (k1 + 1)) / (tf[w] + k1 * (1 - b + b * dl / avgdl)); }
     return s;
   }
-  return async function search(query: string): Promise<{ hits: Hit[]; weak: boolean; maxCos: number }> {
+  return async function search(query: string): Promise<{ hits: Hit[]; weak: boolean; refuse: boolean; maxCos: number }> {
     const qv = await embed(query);
     const vec = docs.map((d, i) => ({ i, score: cos(qv, d.vector) })).sort((a, b) => b.score - a.score);
     const qT = bigrams(query);
@@ -46,14 +48,16 @@ export function buildSearcher(docs: Doc[]) {
       return { id: d.id, text: d.text, url: d.url, section: d.section, cosine: e.vector ?? cos(qv, d.vector), bm25: e.bm25 ?? 0, method: method as Hit["method"], rrf };
     }).sort((a, b) => b.rrf - a.rrf);
     const maxCos = Math.max(...hits.map((h) => h.cosine));
-    return { hits, weak: maxCos < THRESHOLD, maxCos };
+    const maxBm25 = hits.length ? Math.max(...hits.map((h) => h.bm25)) : 0;
+    const strong = maxBm25 >= BM25_MIN;
+    return { hits, weak: maxCos < THRESHOLD && !strong, refuse: maxCos < REFUSE && !strong, maxCos };
   };
 }
 
 export function buildPrompt(query: string, hits: Hit[], weak: boolean): { system: string; user: string } {
   const context = hits.slice(0, 6).map((h) => `[${h.id}] (${h.section}) ${h.text}\n출처: ${h.url}`).join("\n\n");
   const system = [
-    "당신은 어르신 디지털·스마트폰 안내 도우미입니다. 아래 '자료'에 근거해서만 한국어 존댓말로 답하세요.",
+    "당신은 어르신 디지털·스마트폰 안내 도우미입니다. 아래 '자료'에 근거해서만 한국어 존댓말로 답하세요. 반드시 한국어로만 쓰고 한자나 중국어, 불필요한 영어 단어를 쓰지 마세요.",
     "규칙:",
     "1. 답변에 사용한 근거의 [ID]를 문장 뒤에 표시하세요. 예: ...입니다 [SD-004].",
     "2. 자료에 없는 내용(기관명·전화번호·URL·숫자)을 지어내지 마세요.",
