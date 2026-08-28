@@ -1,0 +1,95 @@
+// rag.ts — 검색·프롬프트·답변 로직 (어르신 디지털 안내 RAG)
+export interface Doc { id: string; text: string; url: string; section: string; vector: number[]; }
+export interface Hit { id: string; text: string; url: string; section: string; cosine: number; bm25: number; method: "vector" | "bm25" | "both"; rrf: number; }
+
+const OLLAMA = "http://localhost:11434";
+const EMBED_MODEL = "embeddinggemma";
+const CHAT_MODEL = "qwen3.5:2b";
+export const THRESHOLD = 0.33;
+const K_VEC = 10, K_BM25 = 5, RRF_K = 60;
+
+export async function embed(text: string): Promise<number[]> {
+  const r = await fetch(`${OLLAMA}/api/embed`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model: EMBED_MODEL, input: text }) });
+  if (!r.ok) throw new Error(`임베딩 실패 ${r.status}`);
+  return (await r.json()).embeddings[0];
+}
+
+function bigrams(s: string): string[] { const c = s.replace(/\s+/g, ""); const g: string[] = []; for (let i = 0; i < c.length - 1; i++) g.push(c.slice(i, i + 2)); return g; }
+function cos(a: number[], b: number[]): number { let d = 0, na = 0, nb = 0; for (let i = 0; i < a.length; i++) { d += a[i] * b[i]; na += a[i] * a[i]; nb += b[i] * b[i]; } return d / Math.sqrt(na * nb); }
+
+export function buildSearcher(docs: Doc[]) {
+  const N = docs.length;
+  const docToks = docs.map((d) => bigrams(d.text));
+  const avgdl = docToks.reduce((s, t) => s + t.length, 0) / N;
+  const df: Record<string, number> = {};
+  for (const toks of docToks) for (const w of new Set(toks)) df[w] = (df[w] || 0) + 1;
+  function bm25(qToks: string[], i: number): number {
+    const toks = docToks[i], dl = toks.length, tf: Record<string, number> = {};
+    for (const w of toks) tf[w] = (tf[w] || 0) + 1;
+    const k1 = 1.5, b = 0.75; let s = 0;
+    for (const w of new Set(qToks)) { if (!tf[w]) continue; const idf = Math.log(1 + (N - df[w] + 0.5) / (df[w] + 0.5)); s += idf * (tf[w] * (k1 + 1)) / (tf[w] + k1 * (1 - b + b * dl / avgdl)); }
+    return s;
+  }
+  return async function search(query: string): Promise<{ hits: Hit[]; weak: boolean; maxCos: number }> {
+    const qv = await embed(query);
+    const vec = docs.map((d, i) => ({ i, score: cos(qv, d.vector) })).sort((a, b) => b.score - a.score);
+    const qT = bigrams(query);
+    const bm = docs.map((d, i) => ({ i, score: bm25(qT, i) })).sort((a, b) => b.score - a.score);
+    const m = new Map<number, Record<string, number>>();
+    const add = (arr: { i: number; score: number }[], key: string) => arr.forEach((r, idx) => { const e = m.get(r.i) || { i: r.i }; e[key] = r.score; e[key + "Rank"] = idx + 1; m.set(r.i, e); });
+    add(vec.slice(0, K_VEC), "vector");
+    add(bm.slice(0, K_BM25).filter((x) => x.score > 0), "bm25");
+    const hits: Hit[] = [...m.values()].map((e) => {
+      const rrf = (e.vectorRank ? 1 / (RRF_K + e.vectorRank) : 0) + (e.bm25Rank ? 1 / (RRF_K + e.bm25Rank) : 0);
+      const method = e.vector != null && e.bm25 != null ? "both" : e.vector != null ? "vector" : "bm25";
+      const d = docs[e.i];
+      return { id: d.id, text: d.text, url: d.url, section: d.section, cosine: e.vector ?? cos(qv, d.vector), bm25: e.bm25 ?? 0, method: method as Hit["method"], rrf };
+    }).sort((a, b) => b.rrf - a.rrf);
+    const maxCos = Math.max(...hits.map((h) => h.cosine));
+    return { hits, weak: maxCos < THRESHOLD, maxCos };
+  };
+}
+
+export function buildPrompt(query: string, hits: Hit[], weak: boolean): { system: string; user: string } {
+  const context = hits.slice(0, 6).map((h) => `[${h.id}] (${h.section}) ${h.text}\n출처: ${h.url}`).join("\n\n");
+  const system = [
+    "당신은 어르신 디지털·스마트폰 안내 도우미입니다. 아래 '자료'에 근거해서만 한국어 존댓말로 답하세요.",
+    "규칙:",
+    "1. 답변에 사용한 근거의 [ID]를 문장 뒤에 표시하세요. 예: ...입니다 [SD-004].",
+    "2. 자료에 없는 내용(기관명·전화번호·URL·숫자)을 지어내지 마세요.",
+    "3. 어려운 용어는 풀어서 쉽게 설명하세요.",
+    weak ? "4. 지금은 근거가 약합니다. 단정하지 말고 '정확한 내용은 확인이 필요합니다'라고 조심스럽게 답하세요." : "4. 근거가 충분하면 명확히 답하세요.",
+    "5. 자료 범위 밖 질문이면 지어내지 말고 '안내 범위 밖입니다'라고 정중히 알리세요.",
+  ].join("\n");
+  const user = `자료:\n${context}\n\n질문: ${query}`;
+  return { system, user };
+}
+
+export async function* chatStream(system: string, user: string, signal?: AbortSignal): AsyncGenerator<string> {
+  const r = await fetch(`${OLLAMA}/api/chat`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, signal,
+    body: JSON.stringify({ model: CHAT_MODEL, stream: true, think: false, messages: [{ role: "system", content: system }, { role: "user", content: user }] }),
+  });
+  if (!r.ok || !r.body) throw new Error(`채팅 실패 ${r.status}`);
+  const reader = r.body.getReader(); const dec = new TextDecoder(); let buf = "";
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += dec.decode(value, { stream: true });
+    const lines = buf.split("\n"); buf = lines.pop() || "";
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      try { const j = JSON.parse(line); if (j.message?.content) yield j.message.content as string; } catch { /* 부분 조각 무시 */ }
+    }
+  }
+}
+
+export async function checkOllama(): Promise<{ ok: boolean; hasChat: boolean; hasEmbed: boolean }> {
+  try {
+    const r = await fetch(`${OLLAMA}/api/tags`);
+    if (!r.ok) return { ok: false, hasChat: false, hasEmbed: false };
+    const j = await r.json();
+    const names: string[] = (j.models || []).map((m: { name: string }) => m.name);
+    return { ok: true, hasChat: names.some((n) => n.startsWith(CHAT_MODEL)), hasEmbed: names.some((n) => n.startsWith(EMBED_MODEL)) };
+  } catch { return { ok: false, hasChat: false, hasEmbed: false }; }
+}
