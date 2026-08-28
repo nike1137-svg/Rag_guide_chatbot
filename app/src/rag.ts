@@ -36,7 +36,7 @@ export function buildSearcher(docs: Doc[]) {
     const qv = await embed(query);
     const vec = docs.map((d, i) => ({ i, score: cos(qv, d.vector) })).sort((a, b) => b.score - a.score);
     const qT = bigrams(query);
-    const bm = docs.map((d, i) => ({ i, score: bm25(qT, i) })).sort((a, b) => b.score - a.score);
+    const bm = docs.map((_d, i) => ({ i, score: bm25(qT, i) })).sort((a, b) => b.score - a.score);
     const m = new Map<number, Record<string, number>>();
     const add = (arr: { i: number; score: number }[], key: string) => arr.forEach((r, idx) => { const e = m.get(r.i) || { i: r.i }; e[key] = r.score; e[key + "Rank"] = idx + 1; m.set(r.i, e); });
     add(vec.slice(0, K_VEC), "vector");
