@@ -12,8 +12,10 @@
 - 브라우저에서 `http://localhost:11434`(Ollama API) 접근 가능해야 함 — 원격 서버 사용 시 SSH 포트포워딩(`-L 11434:localhost:11434`) 필요
 
 ## 실행 방법
-
-브라우저에서 http://localhost:5173 접속
+1. `cd app`
+2. `npm install`
+3. `npm run dev`
+4. 브라우저에서 http://localhost:5173 접속
 
 ## 아키텍처 (완전 무료 구성)
 근거자료 15건(senior-docs.source.json) → Ollama embeddinggemma로 사전 임베딩(768차원, senior-docs.json) → 브라우저에서 하이브리드 검색(코사인 유사도 + BM25 + RRF 융합) → 프롬프트 조립 → Ollama qwen3.5:2b로 스트리밍 답변 → LLM-as-a-Judge 자동판정 → 사람 피드백(👍👎)
@@ -42,7 +44,7 @@
 - 답변이 문장마다 [ID] 인용 표시를 완벽히 달지 못하는 경우가 있음 (내용 자체는 근거자료 안에 있는 경우가 대부분)
 
 ## 평가 결과 재현
-같은 폴더에 `eval-results.json`으로 15개 질문 전체의 검색·답변·판정 결과가 저장됩니다.
+`node eval.mjs` 실행 — 같은 폴더에 `eval-results.json`으로 15개 질문 전체의 검색·답변·판정 결과가 저장됩니다.
 
 ## 배포
 GitHub Pages: (배포 진행 중 — 완료 후 주소 업데이트 예정)
