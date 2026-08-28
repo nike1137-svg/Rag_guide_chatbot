@@ -97,3 +97,32 @@ export async function checkOllama(): Promise<{ ok: boolean; hasChat: boolean; ha
     return { ok: true, hasChat: names.some((n) => n.startsWith(CHAT_MODEL)), hasEmbed: names.some((n) => n.startsWith(EMBED_MODEL)) };
   } catch { return { ok: false, hasChat: false, hasEmbed: false }; }
 }
+
+export interface Judgement { grounded: boolean; noHalluc: boolean; cited: boolean; refusal: boolean; score: number; comment: string; }
+
+export async function judge(query: string, answer: string, hits: Hit[]): Promise<Judgement> {
+  const context = hits.slice(0, 6).map((h) => `[${h.id}] ${h.text}`).join("\n");
+  const sys = "당신은 RAG 답변을 평가하는 채점자입니다. 자료·질문·답변을 읽고 아래 6개 기준을 JSON으로만 출력하세요. 다른 말은 하지 마세요.";
+  const rubric = [
+    "기준(true/false):",
+    "- grounded: 답변 내용이 자료 안에 근거가 있으면 true",
+    "- noHalluc: 자료에 없는 사실(기관명·전화번호·URL·숫자)을 지어내지 않았으면 true",
+    "- cited: 답변에 [ID] 형식 근거 표시가 있으면 true (거부 답변이면 없어도 true)",
+    "- refusal: 답변이 '안내 범위 밖' 등으로 정중히 거부했으면 true",
+    "- score: 0~100 정수, comment: 한국어 한 문장 평가",
+    "refusal이 true이면 grounded/noHalluc/cited는 관대하게 봅니다.",
+    '반드시 {"grounded":bool,"noHalluc":bool,"cited":bool,"refusal":bool,"score":int,"comment":"..."} 형식만 출력.',
+  ].join("\n");
+  const user = `${rubric}\n\n[자료]\n${context}\n\n[질문] ${query}\n\n[답변] ${answer}`;
+  const r = await fetch(`${OLLAMA}/api/chat`, {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ model: CHAT_MODEL, stream: false, think: false, format: "json", options: { temperature: 0 }, messages: [{ role: "system", content: sys }, { role: "user", content: user }] }),
+  });
+  if (!r.ok) throw new Error(`judge 실패 ${r.status}`);
+  const data = await r.json();
+  const p = JSON.parse(data.message.content) as Record<string, unknown>;
+  return {
+    grounded: !!p.grounded, noHalluc: !!p.noHalluc, cited: !!p.cited,
+    refusal: !!p.refusal, score: Number(p.score) || 0, comment: String(p.comment ?? ""),
+  };
+}

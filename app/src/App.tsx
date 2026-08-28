@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { buildSearcher, buildPrompt, chatStream, checkOllama, type Doc, type Hit } from "./rag";
+import { buildSearcher, buildPrompt, chatStream, checkOllama, judge, type Doc, type Hit, type Judgement } from "./rag";
 
 type Status = { ollama: boolean; chat: boolean; embed: boolean; docs: number };
 
@@ -15,6 +15,8 @@ export default function App() {
   const [weak, setWeak] = useState(false);
   const [busy, setBusy] = useState(false);
   const [feedback, setFeedback] = useState<"" | "up" | "down">("");
+  const [judgement, setJudgement] = useState<Judgement | null>(null);
+  const [judging, setJudging] = useState(false);
   const searcher = useRef<ReturnType<typeof buildSearcher> | null>(null);
   const abort = useRef<AbortController | null>(null);
 
@@ -28,7 +30,7 @@ export default function App() {
 
   async function ask() {
     if (!query.trim() || !searcher.current || busy) return;
-    setBusy(true); setAnswer(""); setHits([]); setFeedback("");
+    setBusy(true); setAnswer(""); setHits([]); setFeedback(""); setJudgement(null);
     try {
       const res = await searcher.current(query);
       setWeak(res.weak);
@@ -42,6 +44,19 @@ export default function App() {
       setAnswer("오류: " + (e as Error).message);
     } finally {
       setBusy(false); abort.current = null;
+    }
+  }
+
+  async function runJudge() {
+    if (!answer || judging) return;
+    setJudging(true);
+    try {
+      const j = await judge(query, answer, hits);
+      setJudgement(j);
+    } catch (e) {
+      setJudgement({ grounded: false, noHalluc: false, cited: false, refusal: false, score: 0, comment: "판정 오류: " + (e as Error).message });
+    } finally {
+      setJudging(false);
     }
   }
 
@@ -72,10 +87,20 @@ export default function App() {
         </div>
       )}
       {!!answer && !busy && (
-        <div style={{ marginTop: 16, fontSize: 13 }}>
-          도움이 되었나요?{" "}
-          <button onClick={() => setFeedback("up")} style={{ opacity: feedback === "up" ? 1 : 0.4 }}>👍</button>
-          <button onClick={() => setFeedback("down")} style={{ opacity: feedback === "down" ? 1 : 0.4 }}>👎</button>
+        <div style={{ marginTop: 16, fontSize: 13, display: "flex", alignItems: "center", gap: 12 }}>
+          <span>
+            도움이 되었나요?{" "}
+            <button onClick={() => setFeedback("up")} style={{ opacity: feedback === "up" ? 1 : 0.4 }}>👍</button>
+            <button onClick={() => setFeedback("down")} style={{ opacity: feedback === "down" ? 1 : 0.4 }}>👎</button>
+          </span>
+          <button onClick={runJudge} disabled={judging}>{judging ? "판정 중..." : "자동판정"}</button>
+        </div>
+      )}
+      {judgement && (
+        <div style={{ marginTop: 12, padding: 10, border: "1px solid #ddd", borderRadius: 6, fontSize: 13, background: "#fafafa" }}>
+          <div style={{ fontWeight: 600, marginBottom: 4 }}>자동판정 (LLM-as-a-Judge) · 점수 {judgement.score}/100</div>
+          <div>{judgement.grounded ? "✅" : "❌"} 근거기반(grounded) &nbsp; {judgement.noHalluc ? "✅" : "❌"} 지어내지않음(noHalluc) &nbsp; {judgement.cited ? "✅" : "❌"} 출처표시(cited) &nbsp; {judgement.refusal ? "✅" : "❌"} 정중거부(refusal)</div>
+          <div style={{ marginTop: 4, color: "#555" }}>{judgement.comment}</div>
         </div>
       )}
     </main>
