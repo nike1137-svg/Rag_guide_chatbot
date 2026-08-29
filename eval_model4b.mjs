@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 
 const OLLAMA = "http://localhost:11434";
 const EMBED_MODEL = "embeddinggemma";
-const CHAT_MODEL = "qwen3.5:2b";
+const CHAT_MODEL = "qwen3.5:4b";
 const THRESHOLD = 0.33;
 const REFUSE = 0.30;
 const BM25_MIN = 6.0;
@@ -105,7 +105,7 @@ function buildPrompt(query, hits, weak) {
 async function chat(system, user) {
   const r = await fetch(`${OLLAMA}/api/chat`, {
     method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ model: CHAT_MODEL, stream: false, think: false, options: { temperature: 0.3 }, messages: [{ role: "system", content: system }, { role: "user", content: user }] }),
+    body: JSON.stringify({ model: CHAT_MODEL, stream: false, think: false, messages: [{ role: "system", content: system }, { role: "user", content: user }] }),
   });
   if (!r.ok) throw new Error(`채팅 실패 ${r.status}`);
   const data = await r.json();
@@ -128,7 +128,7 @@ async function judge(query, answer, hits) {
   const user = `${rubric}\n\n[자료]\n${context}\n\n[질문] ${query}\n\n[답변] ${answer}`;
   const r = await fetch(`${OLLAMA}/api/chat`, {
     method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ model: CHAT_MODEL, stream: false, think: false, format: "json", options: { temperature: 0 }, messages: [{ role: "system", content: sys }, { role: "user", content: user }] }),
+    body: JSON.stringify({ model: "qwen3.5:2b", stream: false, think: false, format: "json", options: { temperature: 0 }, messages: [{ role: "system", content: sys }, { role: "user", content: user }] }),
   });
   if (!r.ok) throw new Error(`judge 실패 ${r.status}`);
   const data = await r.json();
@@ -156,7 +156,7 @@ async function main() {
     console.log(`  판정: grounded=${j.grounded} noHalluc=${j.noHalluc} cited=${j.cited} refusal=${j.refusal} score=${j.score}`);
     results.push({ type, question: q, weak: res.weak, refuse: res.refuse, maxCos: res.maxCos, answer, judge: j });
   }
-  await writeFile(new URL("./eval-results.json", import.meta.url), JSON.stringify(results, null, 2));
+  await writeFile(new URL("./eval-results-4b.json", import.meta.url), JSON.stringify(results, null, 2));
   const avg = Math.round(results.reduce((s, r) => s + r.judge.score, 0) / results.length);
   console.log(`\n===== 평균 점수: ${avg}/100 (질문 ${results.length}개) =====`);
   console.log("결과가 eval-results.json에 저장되었습니다.");

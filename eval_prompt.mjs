@@ -90,9 +90,9 @@ function buildSearcher(docs) {
 function buildPrompt(query, hits, weak) {
   const context = hits.slice(0, 6).map((h) => `[${h.id}] (${h.section}) ${h.text}\n출처: ${h.url}`).join("\n\n");
   const system = [
-    "당신은 어르신 디지털·스마트폰 안내 도우미입니다. 아래 '자료'에 근거해서만 한국어 존댓말로 답하세요. 반드시 한국어로만 쓰고 한자나 중국어, 불필요한 영어 단어를 쓰지 마세요.",
+    "당신은 어르신 디지털·스마트폰 안내 도우미입니다. 아래 '자료'에 근거해서만 한국어 존댓말로 답하세요. 반드시 한국어로만 쓰세요. 한자 표기(예: 電話), 중국어 문구, 중국어식 숫자 표현(전, 억)을 절대 쓰지 마세요. 한국어 표기로 동일하게 전달하세요.",
     "규칙:",
-    "1. 답변에 사용한 근거의 [ID]를 문장 뒤에 표시하세요. 예: ...입니다 [SD-004].",
+    "1. 모든 문장 뒤에 해당 근거의 [ID]를 표시하세요. 근거가 없는 문장은 만들지 마세요. 예: ...입니다 [SD-004].",
     "2. 자료에 없는 내용(기관명·전화번호·URL·숫자)을 지어내지 마세요.",
     "3. 어려운 용어는 풀어서 쉽게 설명하세요.",
     weak ? "4. 지금은 근거가 약합니다. 단정하지 말고 '정확한 내용은 확인이 필요합니다'라고 조심스럽게 답하세요." : "4. 근거가 충분하면 명확히 답하세요.",
@@ -105,7 +105,7 @@ function buildPrompt(query, hits, weak) {
 async function chat(system, user) {
   const r = await fetch(`${OLLAMA}/api/chat`, {
     method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ model: CHAT_MODEL, stream: false, think: false, options: { temperature: 0.3 }, messages: [{ role: "system", content: system }, { role: "user", content: user }] }),
+    body: JSON.stringify({ model: CHAT_MODEL, stream: false, think: false, messages: [{ role: "system", content: system }, { role: "user", content: user }] }),
   });
   if (!r.ok) throw new Error(`채팅 실패 ${r.status}`);
   const data = await r.json();
@@ -156,7 +156,7 @@ async function main() {
     console.log(`  판정: grounded=${j.grounded} noHalluc=${j.noHalluc} cited=${j.cited} refusal=${j.refusal} score=${j.score}`);
     results.push({ type, question: q, weak: res.weak, refuse: res.refuse, maxCos: res.maxCos, answer, judge: j });
   }
-  await writeFile(new URL("./eval-results.json", import.meta.url), JSON.stringify(results, null, 2));
+  await writeFile(new URL("./eval-results-prompt.json", import.meta.url), JSON.stringify(results, null, 2));
   const avg = Math.round(results.reduce((s, r) => s + r.judge.score, 0) / results.length);
   console.log(`\n===== 평균 점수: ${avg}/100 (질문 ${results.length}개) =====`);
   console.log("결과가 eval-results.json에 저장되었습니다.");

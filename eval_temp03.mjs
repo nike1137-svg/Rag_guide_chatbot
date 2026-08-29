@@ -156,7 +156,7 @@ async function main() {
     console.log(`  판정: grounded=${j.grounded} noHalluc=${j.noHalluc} cited=${j.cited} refusal=${j.refusal} score=${j.score}`);
     results.push({ type, question: q, weak: res.weak, refuse: res.refuse, maxCos: res.maxCos, answer, judge: j });
   }
-  await writeFile(new URL("./eval-results.json", import.meta.url), JSON.stringify(results, null, 2));
+  await writeFile(new URL("./eval-results-temp03.json", import.meta.url), JSON.stringify(results, null, 2));
   const avg = Math.round(results.reduce((s, r) => s + r.judge.score, 0) / results.length);
   console.log(`\n===== 평균 점수: ${avg}/100 (질문 ${results.length}개) =====`);
   console.log("결과가 eval-results.json에 저장되었습니다.");

@@ -72,7 +72,7 @@ export function buildPrompt(query: string, hits: Hit[], weak: boolean): { system
 export async function* chatStream(system: string, user: string, signal?: AbortSignal): AsyncGenerator<string> {
   const r = await fetch(`${OLLAMA}/api/chat`, {
     method: "POST", headers: { "Content-Type": "application/json" }, signal,
-    body: JSON.stringify({ model: CHAT_MODEL, stream: true, think: false, messages: [{ role: "system", content: system }, { role: "user", content: user }] }),
+    body: JSON.stringify({ model: CHAT_MODEL, stream: true, think: false, options: { temperature: 0.3 }, messages: [{ role: "system", content: system }, { role: "user", content: user }] }),
   });
   if (!r.ok || !r.body) throw new Error(`채팅 실패 ${r.status}`);
   const reader = r.body.getReader(); const dec = new TextDecoder(); let buf = "";

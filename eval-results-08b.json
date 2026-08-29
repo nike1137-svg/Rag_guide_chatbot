@@ -1,0 +1,482 @@
+[
+  {
+    "type": "in",
+    "question": "보이스피싱이 의심되면 어디로 신고해요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.6856671559686913,
+    "answer": "보이스피싱 시에 도움을 받으려면 우선 '경찰청 112' 또는 금융감독원 '금융관리실장전화번호 (1332)'를 사용하여 즉시 신고할 수 있습니다 [SD-012]. 추가로 이미 돈을 보냈다면 해당 계좌 지급정지를 요청해야 할 수도 있으며, 이 경우에도 경찰청이나 중앙은행 상담센터에서 도움을 받을 수 있습니다.\n\n출처: https://phishing-keeper.fss.or.kr/",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": false,
+      "score": 80,
+      "comment": "답변은 자료에 명시된 신고 기관과 전화번호를 정확히 인용하여 근거가 명확합니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "스미싱 문자를 받으면 어떻게 해야 하나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.23638566404616687,
+    "answer": "스미싱 (보이스피싱) 의 경우, 먼저 불명확한 주소나 링크와 같은 정보를 숨기고 인터넷에 들어가서 해당 URL이나 이메일을 확인해 보셔야 합니다. 만약 의심되는 내용과 동의하지 않으면 국번 없이 바로 118 번호로 신고하고 상담받아야 하며, 이를 통해 보안센터에서 보호를 받실 수 있습니다. [SD-023]\n\n안내 범위 밖입니다",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": true,
+      "refusal": true,
+      "score": 50,
+      "comment": "답변에 근거 표시가 있으나, 안내 범위를 벗어난 거부 답변으로 인해 grounded 및 cited 기준을 관대하게 적용."
+    }
+  },
+  {
+    "type": "in",
+    "question": "무인민원발급기로 뭘 발급받을 수 있어요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.5934629190621559,
+    "answer": "무인민원발급기 사용으로 주민센터 창구에 가지 않아도 자주 쓰는 서류를 스스로 발급받得上 [SD-014]. 24 시간 운영이 가능하며, 정부에서 위치 정보를 확인할 수도 있습니다. 그러나 무인인증시스템에 따라 설치 장소마다 운영하는 시간이 다르며, 수수료는 조례로 따르므로 반드시 세무사와 상담하세요 [SD-015]. 안내 범위 밖입니다",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": true,
+      "score": 20,
+      "comment": "답변에 근거 표시가 없어 grounded 가 false 로 평가됩니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "정부24에서 등본을 발급받으면 수수료가 드나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.7042609403918317,
+    "answer": "가정에서도 주민등록등본 같은 서류를 직접 발급하거나 열람할 수 있습니다 [SD-015]. (온라인 발급 수수료는 무료입니다) 다만, 무인발급기 활용도 없이 설치 장소마다 운영 시간이 달라지며 자치단체 조례에 따라 수수료가 달라질 수 있으니 정확한 요금은 지역별 조례로 확인하셔야 합니다.",
+    "judge": {
+      "grounded": true,
+      "noHalluc": true,
+      "cited": true,
+      "refusal": false,
+      "score": 90,
+      "comment": "답변이 자료에 근거하여 정확한 정보를 제공함."
+    }
+  },
+  {
+    "type": "in",
+    "question": "디지털배움터 교육은 누가 운영하나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.6889022073579426,
+    "answer": "AI디지털배움터는 과학기술정보통신부 산하인 한국지능정보사회진흥원 (NIA) 을 운영하는 국가 디지털 교육 사업입니다. 따라서 이 사업의 핵심 기관명, 통신사업자 등 구체적인 세부 내용은 안내 범위 밖으로 벗어나므로 답변에 포함하지 마십시오 [SD-002].",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": true,
+      "score": 50,
+      "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준은 관대하게 적용했습니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "디지털배움터 교육비가 드나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.6033707844820703,
+    "answer": "대신, 2025 년 기준 **디지털 배움을 무료로** 제공합니다 [SD-004]. (교육 비용은 전혀 들지 않으며 모든 과정이 무료이고) 이 사업에 대해 궁금한 것은 과학기술정보통신부 디지털포용정책팀 또는 digital society 기획과인 한국지능정보사회진흥원(NIA) 로 문의하거나, 콜센터 1800-0096 으로 전화해 주시면 안내해 드리겠습니다. (안내 범위 밖입니다).",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": true,
+      "score": 50,
+      "comment": "답변에 근거가 있으나, 질문과 관련된 사실(교육비 여부)을 명확히 설명하지 않아 grounded 가 낮음."
+    }
+  },
+  {
+    "type": "in",
+    "question": "디지털배움터는 어디서 신청해요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.6444428347970856,
+    "answer": "디지털 배움을 찾아서 문의하시려면 **[SD-010]**으로 **과학기술정보통신부 디지털포용정책팀** (044-202-6152) 또는 이를 통해 안내할 수 있는 **[SD-009]**의 **디지털배움터 콜센터 1800-0096**을 먼저 연결하면 됩니다. 또한 방문 장애인 교육 문의는 별도 **(1588-2670)**과도 연락하며, 공식 누리집 (https://www.digital-bukumta.kr/) 의 Q&A를 통해 안내할 수 있습니다.\n\n안내 범위 밖입니다",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": true,
+      "refusal": true,
+      "score": 50,
+      "comment": "답변에 [SD-xx] 형식 근거 표시가 없으므로 cited 가 false 로 평가됩니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "고령층도 AI 교육을 받을 수 있나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.5843704611534943,
+    "answer": "네, 고령층이 AI에 대해 안전하고 편리하게 배울 수 있습니다 [SD-003]. AI 디지털배움터는 모든 교육 과정 (반고령 및 기타) 이나 일부 대상별 학습을 통해 접근 가능한 환경을 조성한 것으로 알려졌습니다 [SD-001] 또한, 기관은 '도중 장애인' 등 고령층의 교육을 지원하며 해당 정보를 안내할 수 있는 노요동 콜센터를 1588-2670 로 제공합니다.\n\n고로, AI에 대한 실생활 교육과 안전 가이드는 이러한 시설이나 전화 번호를 통해 제공받을 수 있습니다 [SD-009].",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": true,
+      "refusal": false,
+      "score": 85,
+      "comment": "답변은 자료에 명시된 고령층 대상 교육 내용과 연락처를 정확히 인용하여 근거가 명확합니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "집 근처에서 스마트폰 앱 사용법을 배울 수 있나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.6011541397977516,
+    "answer": "집 근처에서 스마트폰 앱 사용법이나 키오스크 등 생활에 필요한 앱을 익히실 수 있습니다 [SD-006]. 서울시 디지털배움터는 아파트앱과 주차관리앱 등을 가르칩니다. 이밖에 챗GPT, 교통앱 활용등 실생활 중심 과정도 제공해드립니다.\n\n보통 주민센터 또는 복지관에서 배움을 찾는 곳으로 안내합니다 [SD-008].",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": false,
+      "score": 65,
+      "comment": "답변은 자료에 명시된 '집 근처에서 스마트폰 앱 사용법'을 근거로 설명하고 있으며, 지어내지 않은 사실이나 거부도 없으므로 정제되었습니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "배움터에 직접 가기 어려우면 어떻게 하나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.48881535379355484,
+    "answer": "배움터를 직접 방문하기가 어렵다면 **디지털교육센터 콜센터를 통해 문의**하신다는 안내입니다 [SD-008]. 또한, 교육 신청이 가능한지 여부를 확인하거나 필요한 기술적인 지원을 받아보려면 해당 콜센터로 연락하시는 것을 추천드립니다.",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": true,
+      "refusal": false,
+      "score": 95,
+      "comment": "답변은 자료 [SD-008]에 근거하여 직접 방문이 어렵다면 콜센터 문의를 안내하고 있으며, 사실 관계가 정확합니다."
+    }
+  },
+  {
+    "type": "ambiguous",
+    "question": "우리 동네에 배움터가 몇 개 있어요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.5170511638601532,
+    "answer": "우리 동네의 AI 디지털배움터를 구한 곳이나 여러 개 있다는 것은 알 수 없습니다. 안내 범위 밖에입니다.\n[SD-011] 에서는 서울시에서 98개 수준별로 구성된 135 개의 배움터가 운영되고 있지만, 이는 전국 규모의 지역 단위 기관 목록이며, 구체적인 우리 동네에서의 개수를 정확히 정하는 문헌이나 통계 자료에 근거로 명시되어 있지 않습니다. 따라서 안내 범위 밖에 있는 질문입니다.",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 0,
+      "comment": "답변이 '안내 범위 밖'으로 거부되었으므로 grounded, noHalluc, cited 기준은 관대하게 적용합니다."
+    }
+  },
+  {
+    "type": "ambiguous",
+    "question": "디지털배움터 문의 전화번호가 뭐예요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.7143084432181737,
+    "answer": "AI디지털배움터를 방문 장애인 교육에 대해 궁금한 점이 있으시나요? 🙏\n\n[SD-001](https://www.디지털배움터.kr/main.do) 이 자료는 AI digitalen 배움을 제공하는 기관이며, '인구권 및 사회적 통합' 정책 관련 문서들 (SD-037~042 등) 에 따르면 이는 국세청에 등록된 비정부기구를 운영합니다 [SD-001](https://www.디지털배움터.kr/main.do).\n\nAI 디지털 배움을 방문 장애인 교육이 아닌 일반 문의를 목적으로 한다면 다음 채널을 통해 연락하셔야 합니다:\n1. **동네 센터 전화:** 서울시민센터 9627 (또는 지역별 서비스 안내서)\n2. **인터넷 상담热线:** 서울특별시 인터넷상담전화 : 03-584-2227\n\n위 답변에 포함된 모든 내용은 본문의 범위 내에서만 제공됩니다 [SD-015](https://sd.national.gov.kp/news/summary?id=94).",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": false,
+      "score": 20,
+      "comment": "답변에 기관명, 전화번호 등 사실은 지어내었으나 [ID] 형식의 근거 표시가 없어 grounded 가 false 로 평가됩니다."
+    }
+  },
+  {
+    "type": "out",
+    "question": "오늘 날씨 어때요?",
+    "weak": true,
+    "refuse": true,
+    "maxCos": 0.20263692900440605,
+    "answer": "죄송합니다. 이 질문은 안내 범위 밖이거나 자료에 근거가 없어 정확히 답변드리기 어렵습니다. 디지털배움터 이용, 보이스피싱·스미싱 예방, 무인민원발급기·정부24 이용 등에 대해 물어봐 주세요.",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 80,
+      "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+    }
+  },
+  {
+    "type": "out",
+    "question": "손주 생일 선물로 뭐가 좋을까요?",
+    "weak": true,
+    "refuse": true,
+    "maxCos": 0.23994358376042443,
+    "answer": "죄송합니다. 이 질문은 안내 범위 밖이거나 자료에 근거가 없어 정확히 답변드리기 어렵습니다. 디지털배움터 이용, 보이스피싱·스미싱 예방, 무인민원발급기·정부24 이용 등에 대해 물어봐 주세요.",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 50,
+      "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+    }
+  },
+  {
+    "type": "out",
+    "question": "지금 코스피 지수가 얼마예요?",
+    "weak": true,
+    "refuse": true,
+    "maxCos": 0.19318149976196597,
+    "answer": "죄송합니다. 이 질문은 안내 범위 밖이거나 자료에 근거가 없어 정확히 답변드리기 어렵습니다. 디지털배움터 이용, 보이스피싱·스미싱 예방, 무인민원발급기·정부24 이용 등에 대해 물어봐 주세요.",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 80,
+      "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "인터넷에서 이상한 문자가 왔는데 눌러도 될까요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.42500535655381877,
+    "answer": "인터넷에서 이상한 문자 (스미싱·문자사기) 이면, 즉시 국번없이 118로 신고하고 상담받을 수 있습니다. ... [SD-02].\n\n이 자료에는 \" internet 에서 이상한 문자\" 라는 구두 표현이 없습니다. 안내 범위를 벗어난 질문으로 판단합니다.\n안내 범위 밖입니다",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 0,
+      "comment": "답변은 자료에 없는 'internet'이라는 표현을 사용하여 grounded 가 false 로 평가됩니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "경찰인데 계좌를 확인해야 한다고 전화가 왔어요, 어떻게 하죠?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.5158719716376532,
+    "answer": "보이스피싱이 의심되면 즉시 **112**로 신고하셔야 합니다. [SD-013]의 내용이 적절합니다.\n\n확인하기 위해 금융감독원 1332도 추천드립니다. 이 번호는 경찰청에서 통하는 보안전화입니다. 만약 계좌를 보낼 계획이라면 은행콜센터나 119에 해당할 수 있도록 요청하시면 되지만, 우선 **보안정보**가 없는 상황에서는 **경고사항을 알리는 것이 더 중요합니다.**\n\n단순한 물품이나 사물인터넷 기반 서비스일 가능성이 높으므로 실제 자금의 확인이 필요하면 이 단계를 통해 금융감독원 1332로 연락하셔야 합니다. (예: 은행에 계좌급 지출 요청 등) 또한, 해당 앱은 검사가 요구하지 않으므로 절대 응할 수 없으며 **안심한 정보**만 제공해야 하도록 함으로 판단됩니다.\n\n따라서 현재는 경찰청을 먼저 통해 즉시 신고하신 후 금융감독원 1332로 문의하시시는 것이 좋습니다.",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": true,
+      "refusal": false,
+      "score": 90,
+      "comment": "답변이 자료에 근거하여 사실 관계를 정확히 전달하고, [SD-013]를 인용한 citation 형식을 사용했습니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "주민등록등본을 인터넷으로 뗄 수 있나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.6046288217642731,
+    "answer": "아마도 주민등록등본 같은 민원 서류를 **이전 정부24 누리집**(정부 24 온라인 발급)이나 스마트폰 앱을 통해 직접 발급할 수 있습니다. ... [SD-015]. 무인발급기 또한 이러한 기능을 이용할 수 있으며, 창구에 가지 않아도 무료로 사용할 수 있으므로 안심하고 사용하는 것이 좋습니다. ... [SD-014]\n\n주민등록등본을 **스마트폰 앱**에 접속하여 다운로드한 후 **'이전 정부24 온라인 발급'** 기능으로 선택하시면 됩니다. 화면은 손쉽게 안내되어 있습니다, 이 기능을 통해 인터넷 없이 직접 신청할 수 있으므로 걱정하지 마세요.\n\n또한 스마트폰 앱을 열어보면 지도를 확인하기 쉽고 간단한 페이지로 전환될 것으로 보입니다. ... [SD-015]. 3689 앱도 같은 기능이 포함됩니다. 하지만 **출처**는 해당 자료의 범위 밖입니다. ... [안내 범위를 벗어난 부분]",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": false,
+      "score": 70,
+      "comment": "답변은 제공된 자료가 있는 정부24 앱과 무인발급기 기능을 근거로 설명하고 있으며, 출처가 불분명한 URL 언급에 대한 안내 범위를 벗어났으나 정중히 거부하지 않아 점수를 높게 평가합니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "동네에 있는 기계로 서류를 뽑을 수 있다던데 그게 뭐예요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.5204979771428566,
+    "answer": "네, 마을과 같은 곳에서 사무실이나 인터넷뱅킹장 근처에 설치되는 자동 발증기 (나비발원) 를 이용하면 주민등록등본 등 자주 쓰는 민원을 스스로 발급받을 수 있습니다. 이는 지자체 조례의 운영 규정을 따라 작동하며 무료이며 편리합니다 [SD-014].\n**※ 안내 범위 밖입니다.**",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 25,
+      "comment": "답변에 근거 표시가 없으므로 grounded 가 false 로 평가됩니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "디지털배움터에서 배우는 내용에는 어떤 게 있어요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.6536248680473712,
+    "answer": "AI 디지털배움터 (SD-011)에서는 스마트폰·키오스크 등 실생활 중심 교육과 더불어 AI의 개념 이해부터 딥페이크 판별 등을 포함한 안전 교육, 그리고 AI 윤리 내용을 포함하고 있습니다 [SD-007]. 배움터는 주민센터나 생활유휴시설 같은 지역 커뮤니티 기반에서 98개 수준별로 진행되며, 각 단계에 맞는 디지털 지혜를 제공하여 배우려는 사람의 학습 필요와 기술을 지원하는 것이 목적이 있습니다. (AI 교육 관련 내용)",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": true,
+      "refusal": false,
+      "score": 90,
+      "comment": "답변은 자료 [SD-011]과 [SD-007]의 내용을 정확히 인용하여 AI 역량 교육, 안전 교육, 윤리 교육 등 구체적인 내용들을 나열했습니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "디지털배움터는 정부에서 하는 건가요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.653265779119174,
+    "answer": "아, 아님 [SD-015]. 교육 신청 상담은 통신망 전문 부서로 전화 또는 문자를 통해 안내하는 것입니다 (참고 : AI의 개념 이해부터 딥페이크 판별 등 안전 교육을 포함하여 고령층에게 도울 수 있도록 지원함) .\n[SD-007] 이 사업에 관한 문의는 [SD-010]. 과학기술정보통신부 디지털포용정책팀을 통해 상담할 수 있습니다.",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 50,
+      "comment": "답변이 거부되었으므로 grounded, noHalluc, cited 기준은 완화하여 평가합니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "장애인도 디지털배움터 교육 받을 수 있나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.6555256559317084,
+    "answer": "장애인도 교육 신청이나 문의에 대해 쉽게 도움을 드릴 것입니다 [SD-005]. 특히 과학기술정보통신부에서 운영하는 AI디지털배움터를 이용하는 것은 가능합니다. (안내 범위 밖입니다) 이 사업을 통해 국민이 자신의 디지털 수준을 진단하고 그 결과에 맞춘 교육을 추천받을 수 있는 플랫폼으로, 장애인 교육은 별도의 콜센터 1588-2670을 통해 문의할 수도 있습니다 [SD-009].",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": true,
+      "score": 30,
+      "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준은 관대하게 적용하여 점수를 낮췄습니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "AI 안전 교육이라는 게 딥페이크도 알려주나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.6746157154873604,
+    "answer": "AI 디지털 배움터는 실생활 중심 교육을 통해, 예를 들어 컴퓨터에서 나오는 이미지나 영상을 '딤테이크(Fake)'라고 부르는 모방 영상으로 만들어 주는 것을 가르치면 됩니다. 또한 교육 과정에는 딥 페이플 (Deepfake) 기술과 관련된 안전을 포함하여 AI 윤리를 안내합니다. [SD-004]",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": false,
+      "score": 85,
+      "comment": "답변은 자료에 명시된 딥페이크 판별 교육과 AI 윤리 안내 내용을 포함하여 근거가 명확합니다."
+    }
+  },
+  {
+    "type": "in",
+    "question": "디지털배움터 관련 문의는 과학기술정보통신부에도 할 수 있나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.7796412450920436,
+    "answer": "네, 인공지능과 관련하여 궁금해하신 사항은 과학기술정보공시를 통해 상담 가능합니다. 하지만 질문하는 항목에 대한 구체적인 내용은 안내 범위 밖입니다 [SD-010].",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": true,
+      "score": 50,
+      "comment": "답변은 과학기술정보통신부 문의 가능 여부를 사실적으로 인정했으나, 구체적인 내용은 안내 범위 밖으로 정중히 거부하여 grounded 가지만 충족."
+    }
+  },
+  {
+    "type": "in",
+    "question": "우리 동네 주민센터에서도 디지털 교육을 받을 수 있나요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.5903747035995617,
+    "answer": "서울시는 주민센터를 직접 찾아가는 데 필요한 주민을 위해 에듀버스를 운영하여 온 1일 체험 교육과, 이동식 헬프데스크를 설치·운영하며 이를 주민센터 등 지역 커뮤니티 시설에도 확대해서 진행하고 있습니다. 따라서 우리 동네의 디지털 교육을 받을 수 있다는 것은 확인할 수 있으며 해당 기관이 운영하는 만큼 이 질문은 안내 범위 내 입니다 [SD-008].\n주민센터뿐만 아니라 복지관, 생활 유휴시설 등 지역 커뮤니티 기반을 기반으로 하는 다양한 교육 장소에서 또한 무료로 digital 배우터를 운영하고 있습니다. 즉 주민센터를 방문하여 직접 신청하거나 이용할 수도 있으므로 문의에 도움이 되는 답변이 될 것입니다.",
+    "judge": {
+      "grounded": true,
+      "noHalluc": false,
+      "cited": false,
+      "refusal": false,
+      "score": 85,
+      "comment": "답변은 제공된 자료 [SD-011]와 [SD-002], [SD-004]의 내용을 종합하여 주민센터에서 디지털 교육을 받을 수 있음을 명확히 설명하고, 안내 범위 내임을 정중하게 거부했습니다."
+    }
+  },
+  {
+    "type": "ambiguous",
+    "question": "디지털배움터 교육은 몇 시간짜리예요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.5254620916312575,
+    "answer": "AI디지털배움터의 수평선 (수준별 과정) 은 서울시는 135개 마을에서 운영하며, 그 중에서는 **서울시 주민센터와 복지관 등에서 운영하는 학습 수준별로** 배움을 나누는 교육과정이 있습니다. **[SD-002]** 에 따라 이러한 온라인·오프라인 형태의 수평선 기반 교육을 통해 대상자에게 자신의 디지털 역량에 맞는 단계별 훈련을 제공하는데 있습니다. 그러나 현재 질문한 **시간당 몇 시간까지의 수업**이 실제 운영되는 구체적인 내용이나 공식적인 정보에는 아직 명확히 기재되어 있지 않습니다. 이에 대해서는 안내 범위 밖입니다 [SD-012].",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": true,
+      "refusal": true,
+      "score": 45,
+      "comment": "답변에 근거 표시가 있으나, 자료에서 시간 정보를 찾을 수 없어 grounded 가 false 로 평가됩니다."
+    }
+  },
+  {
+    "type": "ambiguous",
+    "question": "디지털배움터 홈페이지 주소가 정확히 뭐예요?",
+    "weak": false,
+    "refuse": false,
+    "maxCos": 0.551713796912191,
+    "answer": "AI디지털배움터를 방문하거나 인터넷으로 확인하실 때 정확한 웹사이트 주소를 찾으실 수 있습니다. 공식 누리집은 [SD-001] 에서 소개하고 있으며 URL 는 https://www. 디지털배움터.kr/main.do 입니다. 이 사이트 주소 위로는 접속해 보시거나, 다른 기관의 홈페이지를 통해 찾아보시면 더 구체적인 정보를 얻을 수도 있을 것입니다. 안내 범위 밖입니다",
+    "judge": {
+      "grounded": true,
+      "noHalluc": true,
+      "cited": true,
+      "refusal": false,
+      "score": 90,
+      "comment": "답변이 제공된 URL 과 [SD-001] 의 정보와 정확히 일치하며, 안내 범위 내 답변입니다."
+    }
+  },
+  {
+    "type": "out",
+    "question": "요즘 인기있는 드라마 추천해주세요",
+    "weak": true,
+    "refuse": true,
+    "maxCos": 0.2179315037862615,
+    "answer": "죄송합니다. 이 질문은 안내 범위 밖이거나 자료에 근거가 없어 정확히 답변드리기 어렵습니다. 디지털배움터 이용, 보이스피싱·스미싱 예방, 무인민원발급기·정부24 이용 등에 대해 물어봐 주세요.",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 80,
+      "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+    }
+  },
+  {
+    "type": "out",
+    "question": "고혈압에 좋은 음식이 뭐예요?",
+    "weak": true,
+    "refuse": true,
+    "maxCos": 0.16927035685169853,
+    "answer": "죄송합니다. 이 질문은 안내 범위 밖이거나 자료에 근거가 없어 정확히 답변드리기 어렵습니다. 디지털배움터 이용, 보이스피싱·스미싱 예방, 무인민원발급기·정부24 이용 등에 대해 물어봐 주세요.",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 50,
+      "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+    }
+  },
+  {
+    "type": "out",
+    "question": "지하철 요금이 얼마예요?",
+    "weak": true,
+    "refuse": true,
+    "maxCos": 0.26007564944818506,
+    "answer": "죄송합니다. 이 질문은 안내 범위 밖이거나 자료에 근거가 없어 정확히 답변드리기 어렵습니다. 디지털배움터 이용, 보이스피싱·스미싱 예방, 무인민원발급기·정부24 이용 등에 대해 물어봐 주세요.",
+    "judge": {
+      "grounded": false,
+      "noHalluc": true,
+      "cited": false,
+      "refusal": true,
+      "score": 80,
+      "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+    }
+  }
+]

@@ -7,7 +7,7 @@ const CHAT_MODEL = "qwen3.5:2b";
 const THRESHOLD = 0.33;
 const REFUSE = 0.30;
 const BM25_MIN = 6.0;
-const K_VEC = 10, K_BM25 = 5, RRF_K = 60;
+const K_VEC = 20, K_BM25 = 5, RRF_K = 60;
 const REFUSAL_MSG = "죄송합니다. 이 질문은 안내 범위 밖이거나 자료에 근거가 없어 정확히 답변드리기 어렵습니다. 디지털배움터 이용, 보이스피싱·스미싱 예방, 무인민원발급기·정부24 이용 등에 대해 물어봐 주세요.";
 
 const QUESTIONS = [
@@ -105,7 +105,7 @@ function buildPrompt(query, hits, weak) {
 async function chat(system, user) {
   const r = await fetch(`${OLLAMA}/api/chat`, {
     method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ model: CHAT_MODEL, stream: false, think: false, options: { temperature: 0.3 }, messages: [{ role: "system", content: system }, { role: "user", content: user }] }),
+    body: JSON.stringify({ model: CHAT_MODEL, stream: false, think: false, messages: [{ role: "system", content: system }, { role: "user", content: user }] }),
   });
   if (!r.ok) throw new Error(`채팅 실패 ${r.status}`);
   const data = await r.json();
@@ -156,7 +156,7 @@ async function main() {
     console.log(`  판정: grounded=${j.grounded} noHalluc=${j.noHalluc} cited=${j.cited} refusal=${j.refusal} score=${j.score}`);
     results.push({ type, question: q, weak: res.weak, refuse: res.refuse, maxCos: res.maxCos, answer, judge: j });
   }
-  await writeFile(new URL("./eval-results.json", import.meta.url), JSON.stringify(results, null, 2));
+  await writeFile(new URL("./eval-results-topk20.json", import.meta.url), JSON.stringify(results, null, 2));
   const avg = Math.round(results.reduce((s, r) => s + r.judge.score, 0) / results.length);
   console.log(`\n===== 평균 점수: ${avg}/100 (질문 ${results.length}개) =====`);
   console.log("결과가 eval-results.json에 저장되었습니다.");
