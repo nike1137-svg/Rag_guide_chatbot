@@ -1,0 +1,702 @@
+{
+  "summary": {
+    "n": 30,
+    "avgLocal": 86,
+    "avgGemini": 92,
+    "avgScoreDiff": 15.6,
+    "agreeScore6pct": 50,
+    "agreeFlagPct": 71
+  },
+  "rows": [
+    {
+      "type": "in",
+      "question": "보이스피싱이 의심되면 어디로 신고해요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "답변은 자료에 명시된 신고처 (경찰청 112, 금융감독원 1332) 를 정확히 인용하고 근거 표시가 되어 있으며 사실 오류 없이 정확한 정보를 전달함."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "제공된 자료를 바탕으로 보이스피싱 신고처와 대응 방법을 정확하고 상세하게 안내하였습니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "in",
+      "question": "스미싱 문자를 받으면 어떻게 해야 하나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "자료 [SD-013] 에 명시된 내용과 답변이 완벽하게 일치하여 정확한 정보 제공을 수행했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "제공된 자료를 바탕으로 스미싱 대응 방법을 정확하게 설명하였으며 근거 표기도 적절합니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "in",
+      "question": "무인민원발급기로 뭘 발급받을 수 있어요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 85,
+        "comment": "답변은 자료 [SD-014]에 근거하여 발급 가능한 서류를 정확히 언급하고, 추가 정보 요청을 통해 답변의 완성도를 높였습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "질문에 대해 자료를 바탕으로 정확하게 답변하였으며 근거 표시도 적절하게 포함되었습니다."
+      },
+      "scoreDiff": 15
+    },
+    {
+      "type": "in",
+      "question": "정부24에서 등본을 발급받으면 수수료가 드나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "답변이 자료의 내용을 정확히 반영하고 근거 표시가 되어 있어 매우 좋은 답변입니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "정부24의 수수료 무료 정책과 자치단체 조례에 따른 차이를 자료에 근거하여 정확하게 설명하였습니다."
+      },
+      "scoreDiff": 0
+    },
+    {
+      "type": "in",
+      "question": "디지털배움터 교육은 누가 운영하나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": false,
+        "refusal": false,
+        "score": 80,
+        "comment": "답변은 자료에 근거한 사실 (한국지능정보사회진흥원이 운영하는 사업)을 정확히 언급하고 있으며, 추가된 정보도 적절한 인용으로 제시되어 있습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "질문에 대해 자료를 바탕으로 정확하게 답변하였으며 근거 표시도 적절합니다."
+      },
+      "scoreDiff": 20
+    },
+    {
+      "type": "in",
+      "question": "디지털배움터 교육비가 드나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": false,
+        "refusal": false,
+        "score": 80,
+        "comment": "답변은 자료에 명시된 '교육비는 전혀 들지 않으며'라는 근거를 명확히 제시하여 grounded 가 맞습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "질문에 대해 정확한 근거를 바탕으로 명확하게 답변하였습니다."
+      },
+      "scoreDiff": 20
+    },
+    {
+      "type": "in",
+      "question": "디지털배움터는 어디서 신청해요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "답변은 자료에 근거한 사실 (콜센터 번호, 누리집 등) 을 정확히 인용하고 [SD-009], [SD-010] 등의 ID 를 명시하여 신뢰성을 확보했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 90,
+        "comment": "질문에 대한 답변이 정확하며 근거 자료를 적절히 활용했으나, 마지막 문장에서 서울시 관련 내용을 인용할 때 [SD-010]이 아닌 [SD-004]를 인용하는 것이 더 적절했습니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "in",
+      "question": "고령층도 AI 교육을 받을 수 있나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 80,
+        "comment": "답변은 자료에 명시된 고령층 대상 교육 내용과 운영 현황을 정확히 반영하여 근거가 명확합니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "질문에 대해 자료를 바탕으로 정확하고 상세하게 답변하였으며 근거 표시도 적절합니다."
+      },
+      "scoreDiff": 20
+    },
+    {
+      "type": "in",
+      "question": "집 근처에서 스마트폰 앱 사용법을 배울 수 있나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "답변이 자료에 근거하여 사실과 일치하며, 인용문자 형식도 올바르게 사용되었습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "제공된 자료를 바탕으로 질문에 대해 정확하고 상세하게 답변하였습니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "in",
+      "question": "배움터에 직접 가기 어려우면 어떻게 하나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "답변은 자료에 근거한 사실 (찾아가는 에듀버스 운영)을 정확히 언급하고 [SD-008], [SD-006]를 인용하여 신뢰성을 확보했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 90,
+        "comment": "질문에 적절하게 답변하였으며 자료를 근거로 내용을 잘 설명하였습니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "ambiguous",
+      "question": "우리 동네에 배움터가 몇 개 있어요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 92,
+        "comment": "답변이 자료의 내용을 정확하게 인용하여 근거가 명확히 제시되어 있으며, 추가된 정보는 없으므로 매우 높은 점수를 받습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "질문에 대해 서울시의 배움터 개수를 정확히 제시하고 근거를 적절히 인용하여 답변하였습니다."
+      },
+      "scoreDiff": 3
+    },
+    {
+      "type": "ambiguous",
+      "question": "디지털배움터 문의 전화번호가 뭐예요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "답변이 자료에 근거하여 정확한 전화번호를 제시하고, 인용 표시가 되어 있습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "질문에 필요한 문의 전화번호를 자료에 근거하여 정확하게 안내하였습니다."
+      },
+      "scoreDiff": 0
+    },
+    {
+      "type": "out",
+      "question": "오늘 날씨 어때요?",
+      "weak": true,
+      "refuse": true,
+      "local": {
+        "grounded": false,
+        "noHalluc": true,
+        "cited": false,
+        "refusal": true,
+        "score": 80,
+        "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": true,
+        "score": 100,
+        "comment": "질문이 안내 범위를 벗어났음을 명확히 인지하고 정중하게 거절하며 대안을 제시하였습니다."
+      },
+      "scoreDiff": 20
+    },
+    {
+      "type": "out",
+      "question": "손주 생일 선물로 뭐가 좋을까요?",
+      "weak": true,
+      "refuse": true,
+      "local": {
+        "grounded": false,
+        "noHalluc": true,
+        "cited": false,
+        "refusal": true,
+        "score": 50,
+        "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": true,
+        "score": 100,
+        "comment": "질문이 안내 범위를 벗어났음을 명확히 인지하고 정중하게 거절하며 대안을 제시하였습니다."
+      },
+      "scoreDiff": 50
+    },
+    {
+      "type": "out",
+      "question": "지금 코스피 지수가 얼마예요?",
+      "weak": true,
+      "refuse": true,
+      "local": {
+        "grounded": false,
+        "noHalluc": true,
+        "cited": false,
+        "refusal": true,
+        "score": 80,
+        "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": true,
+        "score": 100,
+        "comment": "질문이 안내 범위를 벗어났음을 명확히 인지하고 정중하게 거절하며 대안을 제시하였습니다."
+      },
+      "scoreDiff": 20
+    },
+    {
+      "type": "in",
+      "question": "인터넷에서 이상한 문자가 왔는데 눌러도 될까요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "답변이 자료에 근거하여 사실 관계를 정확히 설명하고, 구체적인 신고처와 기관명을 명시하며 안전한 행동 지침을 제시했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "제공된 자료를 바탕으로 질문에 대해 정확하고 친절하게 답변하였으며, 적절한 근거 표시를 포함하고 있습니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "in",
+      "question": "경찰인데 계좌를 확인해야 한다고 전화가 왔어요, 어떻게 하죠?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "답변은 자료에 근거한 사실 (경찰청 112, 금융감독원 1332 등) 을 정확히 인용하고 [SD-012]를 명시하여 신뢰할 수 있습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "질문에 적절하게 대응하였으며 자료에 근거하여 정확한 대처 방법을 안내하였습니다."
+      },
+      "scoreDiff": 0
+    },
+    {
+      "type": "in",
+      "question": "주민등록등본을 인터넷으로 뗄 수 있나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": false,
+        "refusal": false,
+        "score": 80,
+        "comment": "답변은 자료 [SD-015]와 [SD-014]의 내용을 바탕으로 주민등록등본 발급 및 열람 방법을 명확히 설명하여 근거가 확실함."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "질문에 대해 정확하게 답변하였으며 근거 자료를 적절히 인용하였습니다."
+      },
+      "scoreDiff": 15
+    },
+    {
+      "type": "in",
+      "question": "동네에 있는 기계로 서류를 뽑을 수 있다던데 그게 뭐예요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "답변이 자료에 근거가 명확히 있고, 기관명·URL 등 사실은 정확하며 [ID] 형식 인용도 사용되었습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "제공된 자료를 바탕으로 무인민원발급기에 대해 정확하게 설명하였으며 근거 표기도 적절합니다."
+      },
+      "scoreDiff": 0
+    },
+    {
+      "type": "in",
+      "question": "디지털배움터에서 배우는 내용에는 어떤 게 있어요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": false,
+        "refusal": false,
+        "score": 80,
+        "comment": "답변은 자료에 명시된 교육 내용과 운영 현황을 모두 정확하게 반영하여 근거가 명확합니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": false,
+        "refusal": false,
+        "score": 85,
+        "comment": "질문에 대한 답변이 자료를 바탕으로 충실히 작성되었으나, 일부 문장에 근거 표시가 누락되었습니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "in",
+      "question": "디지털배움터는 정부에서 하는 건가요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "답변이 자료에 근거하여 명확히 설명되어 있으며, 추가된 사실은 없으므로 매우 높은 점수입니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "질문에 대해 자료를 바탕으로 정확하게 답변하였으며, 적절한 근거를 표기하였습니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "in",
+      "question": "장애인도 디지털배움터 교육 받을 수 있나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 90,
+        "comment": "답변이 자료에 근거가 있고 사실 오류 없이 인용 표시를 포함하여 정확한 정보 제공."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "질문에 대해 자료를 바탕으로 정확하게 답변하였으며 근거 표시도 적절합니다."
+      },
+      "scoreDiff": 10
+    },
+    {
+      "type": "in",
+      "question": "AI 안전 교육이라는 게 딥페이크도 알려주나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 85,
+        "comment": "답변에 SD-007 과 SD-001 의 ID 를 인용하여 딥페이크 판별 교육과 AI 윤리 포함 내용을 근거로 제시했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 100,
+        "comment": "질문에 대해 자료를 바탕으로 정확하게 답변하였으며 근거 표시도 적절하게 포함되었습니다."
+      },
+      "scoreDiff": 15
+    },
+    {
+      "type": "in",
+      "question": "디지털배움터 관련 문의는 과학기술정보통신부에도 할 수 있나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": false,
+        "refusal": false,
+        "score": 75,
+        "comment": "답변은 자료에 근거하여 과학기술정보통신부 문의 가능 여부를 명확히 설명하고 있으며, 추가적인 안내를 요청하는 부분도 사실과 일치합니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 70,
+        "comment": "과학기술정보통신부로 문의가 가능하다는 점은 정확히 언급했으나, 모든 문의와 신청을 과기부로 할 수 있다고 표현한 것은 자료의 내용보다 과장된 측면이 있습니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "in",
+      "question": "우리 동네 주민센터에서도 디지털 교육을 받을 수 있나요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 90,
+        "comment": "자료의 여러 항목을 근거로 인용하여 답변이 정확하고 신뢰할 수 있습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 85,
+        "comment": "주민센터에서 교육이 가능하다는 핵심 질문에 정확히 답변하였으나, 마지막 문장에서 안내 범위 밖이라는 불필요한 언급이 포함되어 있습니다."
+      },
+      "scoreDiff": 5
+    },
+    {
+      "type": "ambiguous",
+      "question": "디지털배움터 교육은 몇 시간짜리예요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": false,
+        "score": 95,
+        "comment": "자료에 명시된 교육 시간 유연성 (10 분부터 수시간까지) 을 근거로 정확히 설명하고, 관련 사업의 운영 방식을 간략히 언급하여 신뢰할 만한 답변이다."
+      },
+      "gemini": {
+        "grounded": false,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 40,
+        "comment": "제공된 자료에는 교육 시간에 대한 정보가 없는데도 임의로 10분부터 수시간까지라고 답변하여 사실 관계를 왜곡했습니다."
+      },
+      "scoreDiff": 55
+    },
+    {
+      "type": "ambiguous",
+      "question": "디지털배움터 홈페이지 주소가 정확히 뭐예요?",
+      "weak": false,
+      "refuse": false,
+      "local": {
+        "grounded": true,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 85,
+        "comment": "답변에 [SD-009] 근거로 정확한 URL을 제시하여 grounded 및 cited 기준 모두 충족."
+      },
+      "gemini": {
+        "grounded": false,
+        "noHalluc": false,
+        "cited": true,
+        "refusal": false,
+        "score": 20,
+        "comment": "제공된 자료에는 디지털배움터의 공식 누리집 주소가 명시되어 있지 않음에도 불구하고, 존재하지 않는 URL을 임의로 생성하여 답변하였습니다."
+      },
+      "scoreDiff": 65
+    },
+    {
+      "type": "out",
+      "question": "요즘 인기있는 드라마 추천해주세요",
+      "weak": true,
+      "refuse": true,
+      "local": {
+        "grounded": false,
+        "noHalluc": true,
+        "cited": false,
+        "refusal": true,
+        "score": 80,
+        "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": true,
+        "score": 100,
+        "comment": "질문이 안내 범위를 벗어났음을 명확히 인지하고 정중하게 거절하며 대안을 제시하였습니다."
+      },
+      "scoreDiff": 20
+    },
+    {
+      "type": "out",
+      "question": "고혈압에 좋은 음식이 뭐예요?",
+      "weak": true,
+      "refuse": true,
+      "local": {
+        "grounded": false,
+        "noHalluc": true,
+        "cited": false,
+        "refusal": true,
+        "score": 50,
+        "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": true,
+        "score": 100,
+        "comment": "제공된 자료에 관련 정보가 없어 안내 범위 밖임을 정중하게 잘 설명하였습니다."
+      },
+      "scoreDiff": 50
+    },
+    {
+      "type": "out",
+      "question": "지하철 요금이 얼마예요?",
+      "weak": true,
+      "refuse": true,
+      "local": {
+        "grounded": false,
+        "noHalluc": true,
+        "cited": false,
+        "refusal": true,
+        "score": 80,
+        "comment": "답변이 정중히 거부되었으므로 grounded, noHalluc, cited 기준을 관대하게 적용했습니다."
+      },
+      "gemini": {
+        "grounded": true,
+        "noHalluc": true,
+        "cited": true,
+        "refusal": true,
+        "score": 100,
+        "comment": "질문이 안내 범위를 벗어났음을 명확히 인지하고 정중하게 거절하며 대안을 제시하였습니다."
+      },
+      "scoreDiff": 20
+    }
+  ]
+}
