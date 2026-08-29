@@ -7,7 +7,7 @@ const EMBED_MODEL = "embeddinggemma";
 const CHAT_MODEL = "qwen3.5:2b";
 export const THRESHOLD = 0.33;
 export const REFUSE = 0.30;
-const BM25_MIN = 2.0;
+const BM25_MIN = 6.0;
 const K_VEC = 10, K_BM25 = 5, RRF_K = 60;
 
 export async function embed(text: string): Promise<number[]> {

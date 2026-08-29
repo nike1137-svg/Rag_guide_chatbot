@@ -6,7 +6,7 @@ const EMBED_MODEL = "embeddinggemma";
 const CHAT_MODEL = "qwen3.5:2b";
 const THRESHOLD = 0.33;
 const REFUSE = 0.30;
-const BM25_MIN = 2.0;
+const BM25_MIN = 6.0;
 const K_VEC = 10, K_BM25 = 5, RRF_K = 60;
 const REFUSAL_MSG = "죄송합니다. 이 질문은 안내 범위 밖이거나 자료에 근거가 없어 정확히 답변드리기 어렵습니다. 디지털배움터 이용, 보이스피싱·스미싱 예방, 무인민원발급기·정부24 이용 등에 대해 물어봐 주세요.";
 
