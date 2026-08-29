@@ -20,7 +20,8 @@
 4. 브라우저에서 http://localhost:5173 접속
 
 ## 아키텍처 (완전 무료 구성)
-근거자료 15건(senior-docs.source.json) → Ollama embeddinggemma로 사전 임베딩(768차원, senior-docs.json) → 브라우저에서 하이브리드 검색(코사인 유사도 + BM25 + RRF 융합) → 프롬프트 조립 → Ollama qwen3.5:2b로 스트리밍 답변 → LLM-as-a-Judge 자동판정 → 사람 피드백(👍👎)
+근거자료 15건(senior-docs.source.json) → Ollama embeddinggemma로 사전 임베딩(768차원, senior-docs.json) 
+→ 브라우저에서 하이브리드 검색(코사인 유사도 + BM25 + RRF 융합) → 프롬프트 조립 → Ollama qwen3.5:2b로 스트리밍 답변 → LLM-as-a-Judge 자동판정 → 사람 피드백(👍👎)
 
 임베딩·검색은 브라우저/로컬에서, 답변 생성은 로컬 Ollama에서 처리하며, 배포는 GitHub Pages 정적 호스팅을 사용해 서버 비용이 전혀 들지 않습니다.
 
