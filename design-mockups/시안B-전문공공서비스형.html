@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시안 B — 전문 공공서비스형</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: #e8edf2;
+    color: #1a1a2e;
+    line-height: 1.6;
+  }
+  .phone-frame {
+    width: 390px;
+    min-height: 844px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    overflow: hidden;
+    border: 8px solid #1a1a2e;
+  }
+
+  /* 헤더 — 네이비+흰색 공공서비스 스타일 */
+  .header {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    color: #fff;
+    padding: 18px 24px 14px;
+    position: relative;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+  .header-badge .dot {
+    width: 8px;
+    height: 8px;
+    background: #4caf50;
+    border-radius: 50%;
+  }
+  .header h1 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .header .subtitle {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 2px;
+  }
+
+  /* 상태바 */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 24px;
+    background: #f5f7fa;
+    border-bottom: 1px solid #e0e4ea;
+    font-size: 13px;
+    color: #666;
+  }
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .status-dot.green { background: #4caf50; }
+  .status-dot.gray { background: #ccc; }
+
+  /* 큰 글씨 토글 */
+  .font-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 8px 24px;
+    background: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    gap: 8px;
+  }
+  .font-toggle label {
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+  }
+  .toggle-switch {
+    position: relative;
+    width: 48px;
+    height: 26px;
+    background: #ccc;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .toggle-switch.on { background: #1a237e; }
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+  .toggle-switch.on::after { transform: translateX(22px); }
+
+  /* 메인 */
+  .main { padding: 20px 24px; }
+
+  /* 안내 메시지 */
+  .guide-banner {
+    background: #e8eaf6;
+    border: 1px solid #c5cae9;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #283593;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .guide-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* 인기 질문 */
+  .faq-section {
+    margin-bottom: 20px;
+  }
+  .faq-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .faq-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .faq-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #e0e4ea;
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .faq-card:hover {
+    border-color: #1a237e;
+    background: #f5f7ff;
+  }
+  .faq-card:active { transform: scale(0.99); }
+  .faq-num {
+    width: 28px;
+    height: 28px;
+    background: #1a237e;
+    color: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .faq-text {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  /* 입력 */
+  .input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .input-area input {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 17px;
+    border: 2px solid #dde1e8;
+    border-radius: 10px;
+    outline: none;
+    background: #fafbfc;
+  }
+  .input-area input:focus {
+    border-color: #1a237e;
+    background: #fff;
+  }
+  .input-area input::placeholder { color: #aaa; }
+  .send-btn {
+    padding: 14px 22px;
+    background: #1a237e;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .send-btn:hover { background: #0d1452; }
+  .send-btn:active { transform: scale(0.97); }
+
+  /* 채팅 */
+  .chat-area { min-height: 200px; }
+  .chat-bubble {
+    max-width: 85%;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .bubble-bot {
+    background: #f0f3f8;
+    color: #1a1a2e;
+    border-bottom-left-radius: 6px;
+    margin-right: auto;
+    border: 1px solid #e0e4ea;
+  }
+  .bubble-user {
+    background: #1a237e;
+    color: #fff;
+    border-bottom-right-radius: 6px;
+    margin-left: auto;
+  }
+
+  /* TTS */
+  .tts-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    padding: 8px 14px;
+    background: #e8eaf6;
+    border: 1px solid #c5cae9;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1a237e;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tts-btn:hover { background: #1a237e; color: #fff; }
+
+  /* 약한 근거 */
+  .weak-warning {
+    background: #fff3e0;
+    border: 1px solid #ffe0b2;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #e65100;
+    margin-bottom: 10px;
+  }
+
+  /* 출처 */
+  .sources {
+    margin-top: 10px;
+    padding: 12px;
+    background: #f5f7fa;
+    border-radius: 8px;
+    border: 1px solid #e0e4ea;
+  }
+  .sources-title {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .source-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    border: 1px solid #c5cae9;
+    border-radius: 6px;
+    color: #283593;
+    margin: 2px 4px 2px 0;
+    background: #fff;
+  }
+
+  /* 피드백 */
+  .feedback {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: #f5f7fa;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #555;
+  }
+  .feedback button {
+    background: none;
+    border: 2px solid #dde1e8;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .feedback button:hover { border-color: #1a237e; background: #f0f3f8; }
+
+  /* 판정 */
+  .judgement {
+    margin-top: 10px;
+    padding: 12px;
+    background: #f5f7fa;
+    border: 1px solid #e0e4ea;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .judgement-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #1a237e;
+  }
+  .judgement-flags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .flag { font-size: 13px; }
+  .flag-pass { color: #16a34a; }
+  .flag-fail { color: #dc2626; }
+  .judgement-comment { color: #666; font-size: 13px; }
+
+  /* 큰 글씨 모드 */
+  .large-font .faq-text { font-size: 20px; }
+  .large-font .input-area input { font-size: 21px; padding: 16px 18px; }
+  .large-font .send-btn { font-size: 21px; padding: 16px 24px; }
+  .large-font .chat-bubble { font-size: 21px; }
+  .large-font .tts-btn { font-size: 17px; }
+  .large-font .feedback { font-size: 18px; }
+  .large-font .header h1 { font-size: 24px; }
+  .large-font .guide-banner { font-size: 18px; }
+
+  /* 하단 */
+  .footer-note {
+    text-align: center;
+    padding: 14px;
+    font-size: 12px;
+    color: #aaa;
+    border-top: 1px solid #eee;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame" id="app">
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-top">
+      <div class="header-badge">
+        <span class="dot"></span>
+        <span>서비스 운영중</span>
+      </div>
+    </div>
+    <h1>어르신 디지털 안내 챗봇</h1>
+    <div class="subtitle">디지털 사용이 어려운 분들을 위한 맞춤 안내</div>
+  </div>
+
+  <!-- 상태바 -->
+  <div class="status-bar">
+    <div class="status-item">
+      <span class="status-dot green"></span> 모델 연결
+    </div>
+    <div class="status-item">
+      <span class="status-dot green"></span> 자료 24개
+    </div>
+  </div>
+
+  <!-- 큰 글씨 토글 -->
+  <div class="font-toggle">
+    <label>큰 글씨</label>
+    <div class="toggle-switch" id="fontToggle" onclick="toggleFont()"></div>
+  </div>
+
+  <div class="main">
+    <!-- 안내 메시지 -->
+    <div class="guide-banner">
+      <span class="guide-icon">&#128222;</span>
+      <span>궁금한 점을 입력하시면 자세히 안내해 드립니다. 아래 질문을 누르면 빠르게 확인할 수도 있어요.</span>
+    </div>
+
+    <!-- 인기 질문 -->
+    <div class="faq-section">
+      <div class="faq-label">자주 묻는 질문</div>
+      <div class="faq-cards">
+        <div class="faq-card" onclick="selectFaq('보이스피싱이 의심되면 어떻게 해야 하나요?')">
+          <span class="faq-num">1</span>
+          <span class="faq-text">보이스피싱이 의심되면 어떻게 해야 하나요?</span>
+        </div>
+        <div class="faq-card" onclick="selectFaq('디지털배움터는 어떤 곳인가요?')">
+          <span class="faq-num">2</span>
+          <span class="faq-text">디지털배움터는 어떤 곳인가요?</span>
+        </div>
+        <div class="faq-card" onclick="selectFaq('무인민원발급기는 어떻게 사용하나요?')">
+          <span class="faq-num">3</span>
+          <span class="faq-text">무인민원발급기는 어떻게 사용하나요?</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 입력 -->
+    <div class="input-area">
+      <input type="text" id="queryInput" placeholder="질문을 입력하세요" />
+      <button class="send-btn" onclick="ask()">질문하기</button>
+    </div>
+
+    <!-- 채팅 -->
+    <div class="chat-area" id="chatArea"></div>
+  </div>
+
+  <div class="footer-note">시안 B — 전문 공공서비스형</div>
+</div>
+
+<script>
+  let largeFont = false;
+
+  function toggleFont() {
+    largeFont = !largeFont;
+    document.getElementById('app').classList.toggle('large-font', largeFont);
+    document.getElementById('fontToggle').classList.toggle('on', largeFont);
+  }
+
+  function selectFaq(q) {
+    document.getElementById('queryInput').value = q;
+    ask();
+  }
+
+  function ask() {
+    const input = document.getElementById('queryInput');
+    const q = input.value.trim();
+    if (!q) return;
+
+    const chatArea = document.getElementById('chatArea');
+
+    const userBubble = document.createElement('div');
+    userBubble.className = 'chat-bubble bubble-user';
+    userBubble.textContent = q;
+    chatArea.appendChild(userBubble);
+
+    input.value = '';
+
+    setTimeout(() => {
+      const botBubble = document.createElement('div');
+      botBubble.className = 'chat-bubble bubble-bot';
+      botBubble.innerHTML = '답변 시뮬레이션입니다. 실제 서비스에서는 RAG 기반으로 정확한 답변이 제공됩니다.';
+
+      const ttsBtn = document.createElement('button');
+      ttsBtn.className = 'tts-btn';
+      ttsBtn.innerHTML = '&#128266; 읽어주기';
+      ttsBtn.onclick = function() { alert('TTS — Web Speech API'); };
+
+      const wrapper = document.createElement('div');
+      wrapper.style.maxWidth = '85%';
+      wrapper.appendChild(botBubble);
+      wrapper.appendChild(ttsBtn);
+      chatArea.appendChild(wrapper);
+
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }, 500);
+  }
+</script>
+
+</body>
+</html>

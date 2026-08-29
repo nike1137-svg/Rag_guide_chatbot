@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시안 C — 현대적 AI + 접근성 강화형</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: #0f0f1a;
+    color: #e0e0e0;
+    line-height: 1.6;
+  }
+  .phone-frame {
+    width: 390px;
+    min-height: 844px;
+    margin: 40px auto;
+    background: #1a1a2e;
+    border-radius: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    overflow: hidden;
+    border: 8px solid #2a2a4a;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 헤더 — 모던 그라데이션 */
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 18px 24px 14px;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .header h1 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .header .subtitle {
+    font-size: 13px;
+    opacity: 0.85;
+  }
+  .ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .ai-dot {
+    width: 7px;
+    height: 7px;
+    background: #4caf50;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* 접근성 툴바 */
+  .a11y-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 8px 24px;
+    background: #16162b;
+    border-bottom: 1px solid #2a2a4a;
+  }
+  .a11y-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #2a2a4a;
+    border: 1px solid #3a3a5a;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: #ccc;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .a11y-btn:hover { background: #3a3a5a; color: #fff; }
+  .a11y-btn.active { background: #667eea; border-color: #667eea; color: #fff; }
+
+  /* 메인 */
+  .main {
+    flex: 1;
+    padding: 20px 24px;
+    overflow-y: auto;
+  }
+
+  /* 환영 메시지 */
+  .welcome {
+    text-align: center;
+    padding: 30px 20px;
+    margin-bottom: 20px;
+  }
+  .welcome-avatar {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 16px;
+    box-shadow: 0 8px 24px rgba(102,126,234,0.3);
+  }
+  .welcome h2 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .welcome p {
+    font-size: 15px;
+    color: #888;
+  }
+
+  /* 인기 질문 — 태그형 */
+  .faq-section {
+    margin-bottom: 20px;
+  }
+  .faq-label {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .faq-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .faq-pill {
+    background: #2a2a4a;
+    border: 1px solid #3a3a5a;
+    border-radius: 20px;
+    padding: 10px 16px;
+    font-size: 15px;
+    color: #ccc;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .faq-pill:hover {
+    background: #667eea;
+    border-color: #667eea;
+    color: #fff;
+  }
+
+  /* 입력 — 하단 고정 스타일 */
+  .input-area {
+    display: flex;
+    gap: 10px;
+    padding: 16px 24px;
+    background: #16162b;
+    border-top: 1px solid #2a2a4a;
+  }
+  .input-area input {
+    flex: 1;
+    padding: 14px 18px;
+    font-size: 17px;
+    border: 2px solid #3a3a5a;
+    border-radius: 12px;
+    outline: none;
+    background: #1a1a2e;
+    color: #fff;
+  }
+  .input-area input:focus {
+    border-color: #667eea;
+  }
+  .input-area input::placeholder { color: #555; }
+  .send-btn {
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .send-btn:hover { opacity: 0.9; }
+  .send-btn:active { transform: scale(0.97); }
+
+  /* 채팅 */
+  .chat-area {
+    min-height: 200px;
+    padding-bottom: 10px;
+  }
+  .chat-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chat-row.user { justify-content: flex-end; }
+  .chat-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-top: 2px;
+  }
+  .avatar-bot {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+  }
+  .avatar-user {
+    background: #3a3a5a;
+  }
+  .chat-bubble {
+    max-width: 75%;
+    padding: 14px 18px;
+    border-radius: 18px;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .bubble-bot {
+    background: #2a2a4a;
+    color: #e0e0e0;
+    border-bottom-left-radius: 6px;
+  }
+  .bubble-user {
+    background: #667eea;
+    color: #fff;
+    border-bottom-right-radius: 6px;
+  }
+
+  /* TTS + 피드백 액션 */
+  .msg-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    margin-left: 46px;
+  }
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    background: #2a2a4a;
+    border: 1px solid #3a3a5a;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .action-btn:hover { background: #3a3a5a; color: #fff; }
+
+  /* 약한 근거 */
+  .weak-warning {
+    background: rgba(255,152,0,0.1);
+    border: 1px solid rgba(255,152,0,0.3);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #ffb74d;
+    margin-bottom: 10px;
+    margin-left: 46px;
+    max-width: 75%;
+  }
+
+  /* 출처 */
+  .sources {
+    margin-top: 8px;
+    margin-left: 46px;
+    max-width: 75%;
+  }
+  .sources-title {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+  .source-tag {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 11px;
+    border: 1px solid #3a3a5a;
+    border-radius: 6px;
+    color: #888;
+    margin: 2px 4px 2px 0;
+    background: #1a1a2e;
+  }
+
+  /* 판정 */
+  .judgement {
+    margin-top: 10px;
+    margin-left: 46px;
+    max-width: 75%;
+    padding: 12px;
+    background: #16162b;
+    border: 1px solid #2a2a4a;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  .judgement-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #667eea;
+  }
+  .judgement-flags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .flag { font-size: 12px; }
+  .flag-pass { color: #4caf50; }
+  .flag-fail { color: #ef5350; }
+  .judgement-comment { color: #666; font-size: 12px; }
+
+  /* 큰 글씨 모드 */
+  .large-font .faq-pill { font-size: 19px; padding: 12px 18px; }
+  .large-font .input-area input { font-size: 21px; padding: 16px 20px; }
+  .large-font .send-btn { font-size: 21px; }
+  .large-font .chat-bubble { font-size: 21px; }
+  .large-font .action-btn { font-size: 16px; }
+  .large-font .header h1 { font-size: 24px; }
+  .large-font .welcome h2 { font-size: 24px; }
+
+  /* 고대비 모드 */
+  .high-contrast .phone-frame { border-color: #fff; }
+  .high-contrast .header { background: #000; }
+  .high-contrast .a11y-bar { background: #000; }
+  .high-contrast .main { background: #000; }
+  .high-contrast .input-area { background: #000; }
+  .high-contrast .bubble-bot { background: #222; border: 2px solid #fff; color: #fff; }
+  .high-contrast .bubble-user { background: #fff; color: #000; }
+  .high-contrast .faq-pill { border-color: #fff; color: #fff; }
+  .high-contrast .faq-pill:hover { background: #fff; color: #000; }
+
+  .footer-note {
+    text-align: center;
+    padding: 12px;
+    font-size: 12px;
+    color: #444;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame" id="app">
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1>디지털 안내 도우미</h1>
+        <div class="subtitle">어르신을 위한 AI 안내 서비스</div>
+      </div>
+      <div class="ai-badge">
+        <span class="ai-dot"></span>
+        AI 연결됨
+      </div>
+    </div>
+  </div>
+
+  <!-- 접근성 툴바 -->
+  <div class="a11y-bar">
+    <button class="a11y-btn" id="fontBtn" onclick="toggleFont()">A+ 큰글씨</button>
+    <button class="a11y-btn" id="contrastBtn" onclick="toggleContrast()">◐ 고대비</button>
+  </div>
+
+  <!-- 메인 -->
+  <div class="main" id="mainArea">
+    <!-- 환영 메시지 -->
+    <div class="welcome">
+      <div class="welcome-avatar">AI</div>
+      <h2>안녕하세요</h2>
+      <p>궁금한 점을 편하게 물어보세요</p>
+    </div>
+
+    <!-- 인기 질문 -->
+    <div class="faq-section">
+      <div class="faq-label">인기 질문</div>
+      <div class="faq-pills">
+        <div class="faq-pill" onclick="selectFaq('보이스피싱이 의심되면 어떻게 해야 하나요?')">
+          보이스피싱 의심 시 대처법
+        </div>
+        <div class="faq-pill" onclick="selectFaq('디지털배움터는 어떤 곳인가요?')">
+          디지털배움터 안내
+        </div>
+        <div class="faq-pill" onclick="selectFaq('무인민원발급기는 어떻게 사용하나요?')">
+          무인민원발급기 사용법
+        </div>
+      </div>
+    </div>
+
+    <!-- 채팅 -->
+    <div class="chat-area" id="chatArea"></div>
+  </div>
+
+  <!-- 입력 (하단 고정) -->
+  <div class="input-area">
+    <input type="text" id="queryInput" placeholder="질문을 입력하세요" />
+    <button class="send-btn" onclick="ask()">전송</button>
+  </div>
+
+  <div class="footer-note">시안 C — 현대적 AI + 접근성 강화형</div>
+</div>
+
+<script>
+  let largeFont = false;
+  let highContrast = false;
+
+  function toggleFont() {
+    largeFont = !largeFont;
+    document.getElementById('app').classList.toggle('large-font', largeFont);
+    document.getElementById('fontBtn').classList.toggle('active', largeFont);
+  }
+
+  function toggleContrast() {
+    highContrast = !highContrast;
+    document.getElementById('app').classList.toggle('high-contrast', highContrast);
+    document.getElementById('contrastBtn').classList.toggle('active', highContrast);
+  }
+
+  function selectFaq(q) {
+    document.getElementById('queryInput').value = q;
+    ask();
+  }
+
+  function ask() {
+    const input = document.getElementById('queryInput');
+    const q = input.value.trim();
+    if (!q) return;
+
+    const chatArea = document.getElementById('chatArea');
+    const mainArea = document.getElementById('mainArea');
+
+    // 환영 메시지 숨기기
+    const welcome = mainArea.querySelector('.welcome');
+    if (welcome) welcome.style.display = 'none';
+
+    // 사용자 메시지
+    const userRow = document.createElement('div');
+    userRow.className = 'chat-row user';
+    userRow.innerHTML = `
+      <div class="chat-bubble bubble-user">${q}</div>
+      <div class="chat-avatar avatar-user">나</div>
+    `;
+    chatArea.appendChild(userRow);
+
+    input.value = '';
+
+    // AI 답변 시뮬레이션
+    setTimeout(() => {
+      const botRow = document.createElement('div');
+      botRow.className = 'chat-row';
+      botRow.innerHTML = `
+        <div class="chat-avatar avatar-bot">AI</div>
+        <div>
+          <div class="chat-bubble bubble-bot">
+            답변 시뮬레이션입니다. 실제 서비스에서는 RAG 기반으로 정확한 답변이 제공됩니다.
+          </div>
+        </div>
+      `;
+      chatArea.appendChild(botRow);
+
+      // 액션 버튼
+      const actions = document.createElement('div');
+      actions.className = 'msg-actions';
+      actions.innerHTML = `
+        <button class="action-btn" onclick="alert('TTS — Web Speech API')">&#128266; 듣기</button>
+        <button class="action-btn" onclick="alert('피드백: 도움됨')">&#128077;</button>
+        <button class="action-btn" onclick="alert('피드백: 미도움')">&#128078;</button>
+      `;
+      chatArea.appendChild(actions);
+
+      mainArea.scrollTop = mainArea.scrollHeight;
+    }, 500);
+  }
+
+  // Enter 키 전송
+  document.getElementById('queryInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') ask();
+  });
+</script>
+
+</body>
+</html>
