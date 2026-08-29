@@ -31,12 +31,14 @@
 - refusal:true면 grounded/noHalluc/cited는 판단 대상에서 제외한다.
 
 ## 수용 기준 — 수동 점검 (사람이 눈으로 확인, judge 6필드 밖)
-- 최고 유사도 < 0.55일 때 단정 표현 없이 조심스러운 어조로 전환하는가.
+- 최고 유사도 < 0.33(THRESHOLD)일 때 단정 표현 없이 조심스러운 어조로 전환하는가. (BM25 강매칭 BM25_MIN>=6.0이면 어조 전환 없음 — 원안 0.55는 모델 교체 후 코사인 유사도 분포 변화로 실측 조정됨)
 - 전 답변이 한국어 존댓말이며, 어려운 용어를 풀어 설명하는가.
 
 ## 실행 조건
-- 답변 모델: qwen3.5:2b 고정, think:false.
-- 브라우저 임베딩: embeddinggemma-300m-ONNX, 768차원.
+- 답변 모델: qwen3.5:2b 고정(Ollama 로컬), think:false, stream:true.
+- 임베딩: Ollama 로컬 API(embeddinggemma, 768차원) — 임베딩 계산만 서버 위임, 검색 계산은 브라우저에서 수행.
+- 검색: 코사인 top-10 + BM25 top-5 + RRF(k=60) 하이브리드. THRESHOLD=0.33(weak), REFUSE=0.30(거부), BM25_MIN=6.0(강매칭 시 weak/refuse 해제).
+- 임베딩 준비율: 사전임베딩(정적 JSON) 방식이라 실시간 다운로드 진행률(준비율) 개념 없음.
 
 ## 설계 메모 — 목표↔비목표 충돌 지점
 - 경계 미끄러짐(교육→기기): 친절하려다 범위를 넘을 위험 → 수용기준 refusal/noHalluc으로 방어.
