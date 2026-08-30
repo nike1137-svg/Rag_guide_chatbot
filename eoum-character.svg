@@ -1,0 +1,23 @@
+<svg width="200" height="200" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 흰색 테두리 원 -->
+  <circle cx="50" cy="50" r="48" fill="#ffffff"/>
+  <!-- 초록 배경 원 -->
+  <circle cx="50" cy="50" r="44" fill="#1a5c3a"/>
+  
+  <!-- 얼굴 -->
+  <circle cx="50" cy="44" r="18" fill="#ffe0b2"/>
+  
+  <!-- 눈 — 크고 부드럽게 -->
+  <circle cx="44" cy="42" r="2.5" fill="#1a1a1a"/>
+  <circle cx="56" cy="42" r="2.5" fill="#1a1a1a"/>
+  
+  <!-- 볼 -->
+  <circle cx="38" cy="47" r="3.5" fill="#ffccbc" opacity="0.5"/>
+  <circle cx="62" cy="47" r="3.5" fill="#ffccbc" opacity="0.5"/>
+  
+  <!-- 미소 -->
+  <path d="M44 50 Q50 55 56 50" stroke="#1a5c3a" strokeWidth="2" fill="none" strokeLinecap="round"/>
+  
+  <!-- 몸통 — 흰색 -->
+  <path d="M34 66 Q34 60 50 60 Q66 60 66 66 L68 82 Q68 88 50 88 Q32 88 32 82 Z" fill="#ffffff"/>
+</svg>
