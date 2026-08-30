@@ -3,8 +3,8 @@ export interface Doc { id: string; text: string; url: string; section: string; v
 export interface Hit { id: string; text: string; url: string; section: string; cosine: number; bm25: number; method: "vector" | "bm25" | "both"; rrf: number; }
 
 const OLLAMA = "http://localhost:11434";
-const EMBED_MODEL = "embeddinggemma";
-const CHAT_MODEL = "qwen3.5:2b";
+export const EMBED_MODEL = "embeddinggemma";
+export const CHAT_MODEL = "qwen3.5:2b";
 export const THRESHOLD = 0.33;
 export const REFUSE = 0.30;
 const BM25_MIN = 6.0;
