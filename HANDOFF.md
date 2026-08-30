@@ -24,7 +24,7 @@
 ### 실험 13건 (README 표 참고)
 temperature 0.3 채택, top-k 10 유지, THRESHOLD 0.33 유지, BM25_MIN 2.0→6.0 상향, 모델 2b 유지, judge 이중화(로컬 vs Gemini 3.1 Flash-Lite) 비교까지 완료.
 
-### UI·문서 보강 (2026-08-30, 커밋 f5e1ed1)
+### UI·문서 보강 (2026-08-30, 커밋 df63c1f)
 - **연결 상태 칩과 미연결 배너**: 브라우저 확인 → `ollama serve`/`pull` → OS별 `OLLAMA_ORIGINS`(복사 버튼) → "다시 확인" 재시도
 - **스트리밍 중지 버튼** (AbortController가 생성만 되고 취소 UI가 없던 문제 해결)
 - **답변 본문 `[SD-000]` 인용 표시 복원** — 화면에서 지우던 것을 칩 형태로 강조. TTS에서만 제거
@@ -75,6 +75,7 @@ temperature 0.3 채택, top-k 10 유지, THRESHOLD 0.33 유지, BM25_MIN 2.0→6
 - `embed-docs.mjs` / `check_retrieval.mjs` / `hybrid_search.mjs` / `compare_prefix.mjs`
 - `eval.mjs` + `eval-results.json` (정식 평가), `eval_*.mjs` + `eval-results-*.json` (A/B 실험 산출물, 보존)
 - `design-mockups/` (사례분석 12건 + 시안 3종)
+- `docs/screenshots/` (실제 화면 3장) / `docs/MiMo_UI_인수인계서.md` (종료된 UI 작업 인수인계, 이력 보존용)
 - `app/` (Vite + React + TS): `src/rag.ts`, `src/App.tsx`, `src/index.css`, `public/`
 
 ## 남은 작업
@@ -100,3 +101,11 @@ temperature 0.3 채택, top-k 10 유지, THRESHOLD 0.33 유지, BM25_MIN 2.0→6
 - A/B 실험은 원본 스크립트 보존 후 사본으로 실행, "한 바퀴에 변수 하나", 산출물은 커밋
 - 파일 덮어쓰기 전 백업, 오류 시 즉시 삭제 → 확인 → 재작업
 - 새 API·패키지 도입 전 유료 플랜·한도·자동과금 확인 필수 (현재까지 전부 로컬/무료, Gemini judge 실험만 무료 티어 사용)
+- **기준선(대조군) 산출물도 실험군과 똑같이 별도 파일로 남길 것.** 이번에 `eval-results.json`을
+  재실행으로 덮어써서 A/B 표가 비교한 80점짜리 대조군을 잃었다. 파일명만 다르게 해도 막을 수 있었다
+- **평가 결과 JSON 맨 앞에 설정 스탬프를 넣을 것** (K_VEC·THRESHOLD·BM25_MIN·temperature·모델명·실행일시).
+  현재 산출물은 파일 이름으로만 조건을 구분할 수 있어 재현성이 약하다
+- **`eval_*.mjs` 9개는 165줄 중 1~3줄만 다른 복붙본이다.** 상수 하나를 바꾸려면 열 곳을 고쳐야 하고
+  다음 실험에서 조용히 어긋난다. 다음에는 `node eval.mjs --topk=5 --out=...` 형태의 인자 방식으로 통합할 것
+- **히스토리를 재작성했으면 문서의 커밋 해시 참조를 반드시 다시 확인할 것.**
+  공동저자 표기를 지우며 `filter-branch`를 돌린 뒤 HANDOFF의 해시가 도달 불가 상태로 남아 있었다
