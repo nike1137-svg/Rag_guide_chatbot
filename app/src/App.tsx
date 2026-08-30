@@ -270,6 +270,14 @@ export default function App() {
     refreshStatus();
   }, [refreshStatus]);
 
+  /* ?demo=0 / ?demo=1 로 열면 해당 예시를 바로 보여 준다. 예시 링크를 공유할 때 쓴다. */
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get("demo");
+    if (p === "0" || p === "1") showDemo(Number(p));
+    // showDemo는 busy에만 의존하고 첫 렌더에서 한 번만 실행하면 된다.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (answer && chatEndRef.current) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
