@@ -27,6 +27,18 @@ type SpeechRecognitionLike = {
 };
 type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
 
+/* Ollama가 없는 방문자에게 보여 줄 실행 기록 (app/public/demo.json) */
+type DemoCase = {
+  question: string;
+  answer: string;
+  weak: boolean;
+  refuse: boolean;
+  maxCos: number;
+  hits: Hit[];
+  judge: Judgement;
+};
+type DemoFile = { recordedAt: string; model: string; cases: DemoCase[] };
+
 type Status = {
   checked: boolean;
   ollama: boolean;
@@ -234,6 +246,8 @@ export default function App() {
   const [highContrast, setHighContrast] = useState(false);
   const [recording, setRecording] = useState(false);
   const [openHit, setOpenHit] = useState<Hit | null>(null);
+  const [demoNotice, setDemoNotice] = useState("");
+  const demoFile = useRef<DemoFile | null>(null);
 
   const searcher = useRef<ReturnType<typeof buildSearcher> | null>(null);
   const abort = useRef<AbortController | null>(null);
@@ -282,6 +296,7 @@ export default function App() {
       setFeedback("");
       setJudgement(null);
       setRefused(false);
+      setDemoNotice("");
       try {
         const res = await searcher.current(queryText);
         setWeak(res.weak);
@@ -316,6 +331,30 @@ export default function App() {
     },
     [query, busy, refreshStatus],
   );
+
+  /* 실제로 돌려 기록해 둔 결과를 그대로 화면에 올린다. 지어낸 값이 아니다. */
+  const showDemo = useCallback(async (idx: number) => {
+    if (busy) return;
+    try {
+      if (!demoFile.current) {
+        demoFile.current = (await fetch(`${BASE}demo.json`).then((r) => r.json())) as DemoFile;
+      }
+      const c = demoFile.current.cases[idx];
+      setAsked(c.question);
+      setAnswer(c.answer);
+      setHits(c.hits);
+      setWeak(c.weak);
+      setRefused(c.refuse);
+      setJudgement(c.judge);
+      setFeedback("");
+      setDemoNotice(
+        `${demoFile.current.recordedAt}에 ${demoFile.current.model}으로 실제 실행해 기록한 결과입니다. 지금 입력한 질문에 대한 답이 아닙니다.`,
+      );
+    } catch {
+      setDemoNotice("");
+      setAnswer("예시를 불러오지 못했습니다.");
+    }
+  }, [busy]);
 
   function stopAnswer() {
     abort.current?.abort();
@@ -504,6 +543,14 @@ export default function App() {
                     Windows는 작업 표시줄에서 Ollama를 종료한 뒤 다시 실행하고, Linux는{" "}
                     <code>sudo systemctl restart ollama</code>로 재시작합니다.
                   </p>
+                  <p className="conn-note">
+                    서비스로 등록하지 않고 터미널에서 직접 <code>ollama serve</code>로 띄우셨다면
+                    위 명령이 듣지 않습니다. 그 프로세스를 끄고 환경변수를 붙여 다시 실행하세요.
+                  </p>
+                  <CommandBlock
+                    label="직접 실행"
+                    command={'OLLAMA_ORIGINS="https://*.github.io" ollama serve'}
+                  />
                 </li>
               </ol>
 
@@ -575,11 +622,29 @@ export default function App() {
                 </button>
               ))}
             </div>
+            <div className="demo-row">
+              <span className="demo-label">Ollama 설치 없이 결과만 보시려면</span>
+              <button className="btn-ghost" onClick={() => showDemo(0)} disabled={busy}>
+                예시: 안내한 답변
+              </button>
+              <button className="btn-ghost" onClick={() => showDemo(1)} disabled={busy}>
+                예시: 범위 밖 질문 거절
+              </button>
+            </div>
           </div>
 
           {!!answer && (
             <div className="chat-area" ref={chatEndRef}>
               {asked && <p className="asked-line">질문: {asked}</p>}
+
+              {demoNotice && (
+                <div className="demo-notice">
+                  <Icon name="warning" />
+                  <span>
+                    <b>예시 화면</b> — {demoNotice}
+                  </span>
+                </div>
+              )}
 
               {weak && !refused && (
                 <div className="weak-warning">
