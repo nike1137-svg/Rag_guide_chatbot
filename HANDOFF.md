@@ -42,7 +42,26 @@ temperature 0.3 채택, top-k 10 유지, THRESHOLD 0.33 유지, BM25_MIN 2.0→6
 - 프로덕션 빌드 자산 검증(`vite preview`): index.html이 `/Rag_guide_chatbot/` base로 참조하고, js·css·senior-docs.json·eoum-full.png·eoum-ui.png·favicon.svg **6종 모두 200**
 - 화면 동작: 랜딩·연결 칩·FAQ·스트리밍·중지 버튼 전환·출처 칩(`SD-004 교육 비용 의미+낱말 유사도 0.60` 형태) 확인
 - Ollama를 내린 상태에서 **미연결 배너와 복구 안내가 자동 노출되는 것** 확인
-- 히스토리 비밀값 점검: 키 형태 문자열 0건, `.env`·키파일 커밋 이력 없음 → **퍼블릭 전환 가능**
+- 히스토리 비밀값 점검: 키 형태 문자열 0건, `.env`·키파일 커밋 이력 없음 → 퍼블릭 전환 완료
+- 배포 게시 확인(2026-08-30): index.html·assets·senior-docs.json(15건/768차원)·demo.json·이미지 전부 200
+- CORS 실측: `Access-Control-Allow-Origin: https://nike1137-svg.github.io` 응답 확인
+
+### 마무리 보완 (2026-08-30)
+- **예시 미리보기**: Ollama 미설치 방문자가 미연결 배너만 보고 결과물을 전혀 확인할 수 없던 문제 해결.
+  `make-demo.mjs`로 실제 파이프라인을 돌려 `app/public/demo.json`에 기록(도메인내 1건 + 도메인밖 거절 1건).
+  버튼을 누르면 기존 UI(인용 표시·출처 칩·원문 모달·판정 배지)에 그대로 올라가고 예시임을 명시한다.
+  지어낸 값이 아니라 실행 기록이며 eval.mjs와 같은 설정을 쓴다.
+- **직접 `ollama serve` 안내**: 공식 설치 스크립트를 쓰지 않으면 `ollama.service`가 없어
+  `systemctl restart ollama`가 실패한다. 배너와 README 양쪽에 대체 명령을 추가했다.
+- **원격 주소를 SSH로 전환**: HTTPS라 push 때마다 비밀번호를 묻고 실패했다.
+  `github_nike1137`·`github_gh_nopass` 두 키 모두 nike1137-svg로 인증되는 것을 확인하고 SSH로 바꿨다.
+
+### 아키텍처 결정 — 브라우저 임베딩으로 되돌리지 않은 이유
+참조 구현(모두콘 예시)은 임베딩을 브라우저에서 해 Ollama 모델이 1개면 되지만, 이 프로젝트는 2개가 필요하다.
+전환을 검토했으나 하지 않기로 했다. 퀘스트 조건이 "미리 계산해 정적 파일로 배치해도 됩니다"로 양쪽을 허용하고,
+절약되는 용량이 embeddinggemma 0.62GB뿐이며(qwen3.5:2b가 2.74GB), 무엇보다
+**THRESHOLD 0.33·BM25_MIN 6.0이 embeddinggemma의 코사인 분포를 실측해 뽑은 값이라
+임베딩 경로를 바꾸면 실험 기록 전체가 재측정 대상이 된다.** 대신 예시 미리보기로 접근성을 확보했다.
 
 ## 확인된 이슈·관찰
 - qwen3.5:2b(중국계) → 시스템프롬프트 "한국어만" 강제, 간헐적 중국어 누출 잔존
@@ -59,11 +78,15 @@ temperature 0.3 채택, top-k 10 유지, THRESHOLD 0.33 유지, BM25_MIN 2.0→6
 - `app/` (Vite + React + TS): `src/rag.ts`, `src/App.tsx`, `src/index.css`, `public/`
 
 ## 남은 작업
-1. **원격 푸시** — 로컬이 origin/main보다 7커밋 앞서 있음. 이 기기에 GitHub 자격증명이 없어(`git ls-remote` 실패) 마커스님이 인증 후 push 필요
-2. **Pages 재배포** — `cd app && npm run deploy` (빌드는 이미 통과 상태)
-3. **저장소 퍼블릭 전환** — 무료 플랜은 비공개 저장소에서 Pages가 게시되지 않음. 전환 후 Pages 설정 확인하고 **배포 주소를 직접 열어 확인**
-4. **배포 주소에서 수용 기준 재확인** — PRD "수용 기준 — 배포 후 점검" 4항목(자산 로드 / CORS 후 스트리밍 / FAQ 5개 중 근거 있는 답변 4개 이상 / 도메인밖 거절 1건 이상)
-5. **과제 제출** — GitHub 저장소 URL + 배포 URL
+
+없음. 제출 준비 완료 상태다.
+
+- GitHub 저장소: https://github.com/nike1137-svg/Rag_guide_chatbot (퍼블릭)
+- 배포 URL: https://nike1137-svg.github.io/Rag_guide_chatbot/ (게시 확인)
+- 제출 폼: https://forms.gle/1BMsytrwzN5uscNA6
+
+미확인 1건: 배포 화면에서 예시 버튼 두 개를 눌렀을 때의 렌더링을 눈으로 확인하지 못했다.
+데이터 경로(demo.json 200)와 빌드 포함은 확인됨.
 
 ## 재개 방법
 1. `git log --oneline`으로 최근 커밋과 이 문서의 "완료된 것" 대조
