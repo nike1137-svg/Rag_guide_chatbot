@@ -3,9 +3,9 @@
 로컬 RAG 파이프라인으로 만든 "어르신 디지털·스마트폰 이용 안내" 챗봇입니다.
 메인퀘스트3(내 도메인에서 더 잘 대답해주는 RAG 챗봇 만들기) 과제로 만들었습니다.
 
-- GitHub 저장소: https://github.com/nike1137-svg/Rag_guide_chatbot
 - 배포 주소: https://nike1137-svg.github.io/Rag_guide_chatbot/
 - 설치 없이 쓰는 주소: https://chat.dodami-ai.com
+- 그 주소의 저장소: https://github.com/nike1137-svg/Rag_guide_chatbot-live
 - 관련 문서: [PRD.md](./PRD.md) · [HANDOFF.md](./HANDOFF.md)
 
 > **실행 조건**: 답변은 페이지를 연 컴퓨터의 로컬 Ollama가 만듭니다. 직접 질문하시려면
@@ -103,6 +103,8 @@ https://chat.dodami-ai.com
 노트북이 꺼져 있어도 예시 미리보기 버튼은 동작합니다.
 위 배포 주소는 이와 무관하게 항상 동작합니다.
 
+이쪽 소스는 [Rag_guide_chatbot-live](https://github.com/nike1137-svg/Rag_guide_chatbot-live)
+저장소에 따로 두었습니다. 제출본을 건드리지 않으려고 저장소부터 나눴습니다.
 구조와 운영 방법은 [HANDOFF.md](./HANDOFF.md)에 적었습니다.
 
 ## 사용 전 준비
